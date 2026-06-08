@@ -1,0 +1,342 @@
+/* Configuração do container principal (Ocupa 100% da tela visível) */
+/* Atualize o reset no topo do seu login.component.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif; /* Alterado para Open Sans */
+}
+.login-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Duas colunas no Desktop */
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #0b111e;
+    color: #ffffff;
+}
+
+/* ==========================================
+   LADO ESQUERDO: Informações e Destaques
+   ========================================== */
+.left-side {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(11, 17, 30, 0.95) 100%),
+                url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=1400');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    border-right: 1px solid #1e293b;
+}
+
+.brand-content {
+    max-width: 500px;
+}
+
+.logo-web {
+font-family: 'Cinzel', serif;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 35px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #e5a93c;
+    margin-bottom: 40px;
+}
+
+.welcome-title {
+    font-family: 'Cinzel', serif;
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+.welcome-subtitle {
+    font-size: 16px;
+    color: #9aa0a6;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Lista de Recursos */
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.feature-icon {
+    background-color: rgba(229, 169, 60, 0.1);
+    color: #e5a93c;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.feature-text h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.feature-text p {
+    font-size: 14px;
+    color: 	FFFAFA;
+}
+
+/* ==========================================
+   LADO DIREITO: Card de Login
+   ========================================== */
+.right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: #0b111e;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 440px;
+    background-color: #111827; /* Tom escuro levemente diferente igual ao print */
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 40px;
+}
+
+.logo-mobile {
+    display: none; /* Escondido por padrão no desktop */
+}
+
+.card-header {
+    margin-bottom: 28px;
+}
+
+.card-header h2 {
+font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.card-header p {
+    font-size: 14px;
+    color: FFFAFA;
+}
+
+/* Formulário de Inputs */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #9aa0a6;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    color: #6b7280;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-wrapper input:focus {
+    border-color: #e5a93c;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+/* Ações do Formulário (Lembrar-me e Esqueci a senha) */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #9aa0a6;
+}
+
+.forgot-link {
+    color: #3b82f6; /* Azul conforme a imagem de referência */
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* Botão de Envio Principal */
+.btn-submit {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #e5a93c;
+    color: #0b111e;
+    border-color: #e5a93c;
+}
+
+/* Divisor */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #374151;
+}
+
+.divider:not(:empty)::before { margin-right: 1em; }
+.divider:not(:empty)::after { margin-left: 1em; }
+
+/* Botões Sociais */
+.social-login {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-social {
+    flex: 1;
+    background-color: transparent;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 12px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-social:hover {
+    background-color: #1f2937;
+}
+
+.btn-social img {
+    width: 16px;
+    height: 16px;
+}
+
+/* Footer do Suporte */
+.card-footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Altera a cor do link para o tom dourado/laranja */
+.card-footer p a {
+    color: #e5a93c; /* Mesma cor laranja/dourada do logo e botões */
+    text-decoration: none; /* Remove o sublinhado padrão se preferir */
+    font-weight: 600; /* Deixa a letra um pouco mais gordinha para destacar */
+    transition: color 0.2s; /* Adiciona um efeito suave ao passar o mouse */
+}
+
+/* Efeito ao passar o mouse por cima (Hover) */
+.card-footer p a:hover {
+    color: #cc922b; /* Um tom de laranja ligeiramente mais escuro ao interagir */
+    text-decoration: underline; /* Adiciona o sublinhado de volta apenas no hover */
+}
+
+/* ==========================================
+   RESPONSIVIDADE (Telas menores / Mobile)
+   ========================================== */
+@media (max-width: 992px) {
+    .login-wrapper {
+        grid-template-columns: 1fr; /* Muda para uma coluna única */
+    }
+
+    .left-side {
+        display: none; /* Oculta o painel de features no mobile */
+    }
+
+    .right-side {
+        padding: 20px;
+    }
+
+    .login-card {
+        border: none;
+        background-color: transparent; /* Remove o fundo do card para fluir melhor no celular */
+        padding: 10px;
+    }
+
+    .logo-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #e5a93c;
+        margin-bottom: 32px;
+    }
+}

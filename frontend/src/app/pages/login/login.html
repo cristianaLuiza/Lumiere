@@ -1,0 +1,103 @@
+<div class="login-wrapper">
+
+  <div class="left-side">
+    <div class="brand-content">
+      <div class="logo-web">
+        <i class="fa-solid fa-book-open"></i>
+        <span>LUMIERE</span>
+      </div>
+
+      <h1 class="welcome-title">Bem-vindo(a) de volta!</h1>
+      <p class="welcome-subtitle">
+        Acesse sua conta para continuar sua jornada literária, gerenciar suas leituras e explorar novos títulos na comunidade.
+      </p>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fa-solid fa-bookmark"></i>
+          </div>
+          <div class="feature-text">
+            <h3>Biblioteca Pessoal</h3>
+            <p>Organize suas leituras atuais, desejadas e concluídas.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="feature-text">
+            <h3>Comunidade Ativa</h3>
+            <p>Troque resenhas, notas, livros e participe de clubes do livro.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-side">
+    <div class="login-card">
+
+      <div class="logo-mobile">
+        <i class="fa-solid fa-book-open"></i>
+        <span>LUMIERE</span>
+      </div>
+
+      <header class="card-header">
+        <h2>Conecte-se à sua conta</h2>
+        <p>Informe seu e-mail e senha para acessar o painel.</p>
+      </header>
+
+      <form class="login-form">
+        <div class="input-group">
+          <label for="email">E-mail*</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-envelope input-icon"></i>
+            <input type="email" id="email" placeholder="Digite seu e-mail" required>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Senha*</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="password" placeholder="Digite sua senha" required>
+            <i class="fa-regular fa-eye toggle-password"></i>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <label class="checkbox-container">
+            <input type="checkbox" id="remember">
+            <span class="checkmark"></span>
+            Lembrar-me
+          </label>
+          <a href="#" class="forgot-link">Esqueceu sua senha?</a>
+        </div>
+
+        <button type="button" [routerLink]="['/home']" class="btn-submit">
+          <i class="fa-solid fa-right-to-bracket"></i> Acessar painel
+        </button>
+      </form>
+
+      <div class="divider">
+        <span>ou continue com</span>
+      </div>
+
+      <div class="social-login">
+        <button class="btn-social">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google__G__Logo.svg" alt="Google"> Google
+        </button>
+        <button class="btn-social">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook"> Facebook
+        </button>
+      </div>
+
+      <footer class="card-footer">
+        <p>Ainda não tem uma conta? <a routerLink="/cadastrar-usuario">  Cadastre agora</a></p>
+      </footer>
+    </div>
+  </div>
+
+</div>

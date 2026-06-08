@@ -1,0 +1,153 @@
+<div class="home-container">
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">
+        <i class="fa-solid fa-book-open"></i>
+        <span>LUMIERE</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" class="active">Home</a>
+        <a routerLink="/meus-livros">Meus Livros</a>
+        <a routerLink="/interesses">Interesses</a>
+        <a href="#">Empréstimos</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
+        <button class="btn-profile">Entrar</button>
+        <button class="btn-cta">Cadastrar</button>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Conectando pessoas através da <span>leitura.</span></h1>
+      <p>Compartilhe livros, descubra histórias e faça parte de uma comunidade que acredita no poder do conhecimento.</p>
+      
+      <div class="hero-search">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            placeholder="Qual livro você está procurando hoje?"
+            [(ngModel)]="tituloBusca"
+            (input)="buscarLivroTitulo()">
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-value">{{ livros.length }}</span>
+          <span class="stat-label"><i class="fa-solid fa-book"></i> Livros cadastrados</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">12.458</span>
+          <span class="stat-label"><i class="fa-solid fa-users"></i> Leitores</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">8.743</span>
+          <span class="stat-label"><i class="fa-solid fa-handshake"></i> Trocas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">4.9</span>
+          <span class="stat-label"><i class="fa-solid fa-star"></i> Avaliação</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="section-header">
+      <h2 class="cinzel-title">Livros em destaque</h2>
+      <p>Explore o acervo completo da nossa biblioteca comunitária.</p>
+    </section>
+
+    <div class="content-layout">
+      <aside class="filters-sidebar">
+        <div class="filter-card">
+          <h3>Filtrar busca</h3>
+          
+          <div class="filter-group">
+            <label>Título ou autor</label>
+            <input type="text" placeholder="Ex: George Orwell">
+          </div>
+
+          <div class="filter-group">
+            <label>Categoria</label>
+
+            <select
+              [(ngModel)]="generoBusca"
+              (change)="buscarLivroGenero()">
+
+              <option value="">Todos os gêneros</option>
+              <option value="Romance">Romance</option>
+              <option value="Fantasia">Fantasia</option>
+              <option value="Ficcao">Ficção</option>
+              <option value="Cientifica">Científica</option>
+              <option value="Suspense">Suspense</option>
+              <option value="Policial">Policial</option>
+              <option value="Terror">Terror</option>
+              <option value="Historica">Histórica</option>
+
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Localização</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-location-dot"></i>
+              <input type="text" placeholder="Sua cidade">
+            </div>
+          </div>
+
+          <button class="btn-apply-filters">Aplicar filtros</button>
+        </div>
+      </aside>
+
+      <div class="book-grid">
+        
+        @for (livro of livros; track livro.id) {
+          <div class="book-card" [class.inativo]="!livro.ativo">
+            <div class="book-cover">
+              <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500" [alt]="livro.titulo">
+              
+              @if (livro.disponivel) {
+                <span class="badge disponível">Disponível</span>
+              } @else {
+                <span class="badge emprestado">Indisponível</span>
+              }
+            </div>
+            
+            <div class="book-info">
+              <h4>{{ livro.titulo }}</h4>
+              <p class="author">por {{ livro.autor }}</p>
+
+              @if (livro.generoLivro) {
+          <span class="book-genre">
+            <i class="fa-solid fa-bookmark"></i> {{ livro.generoLivro }}
+          </span>
+        }
+              
+              @if (livro.descricao) {
+                <p class="description">{{ livro.descricao }}</p>
+              }
+
+              @if (livro.tipoInteracao) {
+                <div class="interaction-type">
+                  <i class="fa-solid fa-circle-info"></i> Modalidade: {{ livro.tipoInteracao }}
+                </div>
+              }
+            </div>
+          </div>
+        } @empty {
+          <div class="empty-state">
+            <i class="fa-solid fa-book-open-reader"></i>
+            <p>Nenhum livro foi encontrado no momento.</p>
+          </div>
+        }
+
+      </div>
+    </div>
+  </main>
+</div>

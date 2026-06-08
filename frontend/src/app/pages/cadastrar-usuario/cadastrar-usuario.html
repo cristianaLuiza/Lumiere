@@ -1,0 +1,139 @@
+<div class="register-wrapper">
+  <div class="register-card">
+
+    <a routerLink="/login" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i> Voltar para o login
+    </a>
+
+    <header class="register-header">
+      <div class="logo">
+        <i class="fa-solid fa-book-open"></i>
+        <span>LUMIERE</span>
+      </div>
+      <h2>Criar conta</h2>
+      <p>Preencha seus dados para criar sua conta.</p>
+    </header>
+
+    <form class="register-form">
+
+      <div class="input-group full-width">
+        <label for="nome">Nome completo</label>
+        <div class="input-wrapper">
+          <i class="fa-regular fa-user input-icon"></i>
+          <input type="text" id="nome" placeholder="Digite seu nome completo">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label for="email">E-mail</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-envelope input-icon"></i>
+            <input type="email" id="email" placeholder="Digite seu e-mail">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="telefone">Telefone</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-phone input-icon"></i>
+            <input type="text" id="telefone" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label for="cpf">CPF</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-id-card input-icon"></i>
+            <input type="text" id="cpf" placeholder="000.000.000-00">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="nascimento">Data de nascimento</label>
+          <div class="input-wrapper">
+            <i class="fa-regular fa-calendar input-icon"></i>
+            <input type="text" id="nascimento" placeholder="DD/MM/AAAA">
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group full-width">
+        <label for="endereco">Endereço</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-location-dot input-icon"></i>
+          <input type="text" id="endereco" placeholder="Digite seu endereço">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group size-small">
+          <label for="numero">Número</label>
+          <div class="input-wrapper">
+            <input type="text" id="numero" placeholder="Nº">
+          </div>
+        </div>
+        <div class="input-group size-large">
+          <label for="complemento">Complemento</label>
+          <div class="input-wrapper">
+            <input type="text" id="complemento" placeholder="Opcional">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group size-large">
+          <label for="cidade">Cidade</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-city input-icon"></i>
+            <input type="text" id="cidade" placeholder="Digite sua cidade">
+          </div>
+        </div>
+        <div class="input-group size-small">
+          <label for="estado">Estado</label>
+          <div class="input-wrapper select-wrapper">
+            <select id="estado">
+              <option value="">UF</option>
+              <option value="SP">SP</option>
+              <option value="RJ">RJ</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group full-width">
+        <label for="password">Senha</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="password" placeholder="Crie uma senha">
+          <i class="fa-regular fa-eye toggle-password"></i>
+        </div>
+      </div>
+
+      <div class="input-group full-width">
+        <label for="confirm-password">Confirmar senha</label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-lock input-icon"></i>
+          <input type="password" id="confirm-password" placeholder="Confirme sua senha">
+          <i class="fa-regular fa-eye toggle-password"></i>
+        </div>
+      </div>
+
+      <div class="terms-container">
+        <label class="checkbox-label">
+          <input type="checkbox" required>
+          <span class="text-terms">
+            Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a>
+          </span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-register">Criar conta</button>
+    </form>
+
+    <footer class="register-footer">
+      <p>Já tem uma conta? <a routerLink="/login">Fazer login</a></p>
+    </footer>
+
+  </div>
+</div>

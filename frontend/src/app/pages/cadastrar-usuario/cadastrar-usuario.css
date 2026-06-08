@@ -1,0 +1,119 @@
+/* Container Geral do Cadastro (Modo Claro / Biblioteca Iluminada) */
+.register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(241, 245, 249, 0.9), rgba(219, 234, 254, 0.05)),
+                url('https://images.unsplash.com/photo-1568667256549-094345857637?q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 40px 20px;
+}
+
+/* Card de Cadastro (Vidro Claro Fosco) */
+.register-card {
+    background: rgba(255, 255, 255, 0.85);
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+.register-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.register-header .logo {
+font-family: 'Cinzel', serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #e5a93c;
+    letter-spacing: 1px;
+}
+
+.register-header .logo i { color: #e5a93c; }
+.register-header h2 { font-size: 24px; color: #0f172a; margin: 12px 0 6px; }
+.register-header p { font-size: 14px; color: #475569; }
+
+/* Formulário e Inputs */
+.register-form { display: flex; flex-direction: column; gap: 18px; }
+.form-row { display: flex; gap: 16px; }
+.input-group { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.full-width { width: 100%; }
+.size-small { flex: 0.3; }
+.size-large { flex: 0.7; }
+
+.input-group label { font-size: 14px; font-weight: 600; color: #1e293b; }
+.input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+.input-icon { position: absolute; left: 14px; color: #64748b; }
+
+.input-wrapper input, .input-wrapper select {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #0f172a; /* Texto escuro para contraste no modo claro */
+    font-size: 14px;
+    outline: none;
+}
+
+.size-small input, .input-wrapper select { padding-left: 14px; }
+
+.input-wrapper input:focus, .input-wrapper select:focus {
+    border-color: #e5a93c;
+    box-shadow: 0 0 0 3px rgba(229, 169, 60, 0.2);
+}
+
+.toggle-password { position: absolute; right: 14px; color: #64748b; cursor: pointer; }
+
+/* Checkbox e Botão Laranja */
+.terms-container { margin: 4px 0; }
+.checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #334155; }
+.checkbox-label a { color: #e5a93c; text-decoration: none; font-weight: 600; }
+
+.btn-register {
+    background-color: #e5a93c;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-register:hover { background-color: #cc922b; }
+
+.register-footer { text-align: center; margin-top: 20px; font-size: 14px; color: #334155; }
+.register-footer a { color: #e5a93c; text-decoration: none; font-weight: 600; }
+
+/* Responsividade Mobile */
+@media (max-width: 640px) {
+    .form-row { flex-direction: column; gap: 18px; }
+    .size-small, .size-large { flex: 1; }
+    .register-card { padding: 24px; background: #ffffff; box-shadow: none; border: none;}
+    .register-wrapper { background: #ffffff; padding: 10px; }
+}
