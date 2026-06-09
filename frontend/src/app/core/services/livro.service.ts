@@ -36,5 +36,9 @@ filtrarPorGenero(genero: string): Observable<Livro[]> {
     { params }
   );
 }
+
+listarLivroId(idUsuario: number):Observable<Livro[]>{
+  return this.http.get<Livro[]>(`${this.apiUrl}/usuario/${idUsuario}`)
+}
   
 }

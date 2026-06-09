@@ -1,21 +1,29 @@
 <div class="home-container">
   <nav class="navbar">
     <div class="nav-content">
-      <div class="logo">
-        <i class="fa-solid fa-book-open"></i>
-        <span>LUMIERE</span>
+      
+      <div class="nav-left-brand">
+        <div class="user-avatar-nav">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto de Perfil">
+        </div>
+        <div class="logo">
+          <span>LUMIERE</span>
+        </div>
       </div>
+
       <div class="nav-links">
         <a href="#" class="active">Home</a>
-        <a routerLink="/meus-livros">Meus Livros</a>
+        <a [routerLink]="['/meus-livros']">Meus Livros</a>
         <a routerLink="/interesses">Interesses</a>
         <a href="#">Empréstimos</a>
       </div>
+
       <div class="nav-actions">
         <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
         <button class="btn-profile">Entrar</button>
         <button class="btn-cta">Cadastrar</button>
       </div>
+
     </div>
   </nav>
 
@@ -75,11 +83,7 @@
 
           <div class="filter-group">
             <label>Categoria</label>
-
-            <select
-              [(ngModel)]="generoBusca"
-              (change)="buscarLivroGenero()">
-
+            <select [(ngModel)]="generoBusca" (change)="buscarLivroGenero()">
               <option value="">Todos os gêneros</option>
               <option value="Romance">Romance</option>
               <option value="Fantasia">Fantasia</option>
@@ -89,7 +93,6 @@
               <option value="Policial">Policial</option>
               <option value="Terror">Terror</option>
               <option value="Historica">Histórica</option>
-
             </select>
           </div>
 
@@ -106,12 +109,10 @@
       </aside>
 
       <div class="book-grid">
-        
-        @for (livro of livros; track livro.id) {
+        @for (livro of livros(); track livro.id) {
           <div class="book-card" [class.inativo]="!livro.ativo">
             <div class="book-cover">
               <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500" [alt]="livro.titulo">
-              
               @if (livro.disponivel) {
                 <span class="badge disponível">Disponível</span>
               } @else {
@@ -124,19 +125,13 @@
               <p class="author">por {{ livro.autor }}</p>
 
               @if (livro.generoLivro) {
-          <span class="book-genre">
-            <i class="fa-solid fa-bookmark"></i> {{ livro.generoLivro }}
-          </span>
-        }
-              
+                <span class="book-genre"><i class="fa-solid fa-bookmark"></i> {{ livro.generoLivro }}</span>
+              }
               @if (livro.descricao) {
                 <p class="description">{{ livro.descricao }}</p>
               }
-
               @if (livro.tipoInteracao) {
-                <div class="interaction-type">
-                  <i class="fa-solid fa-circle-info"></i> Modalidade: {{ livro.tipoInteracao }}
-                </div>
+                <div class="interaction-type"><i class="fa-solid fa-circle-info"></i> Modalidade: {{ livro.tipoInteracao }}</div>
               }
             </div>
           </div>
@@ -146,7 +141,6 @@
             <p>Nenhum livro foi encontrado no momento.</p>
           </div>
         }
-
       </div>
     </div>
   </main>

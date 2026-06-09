@@ -1,1 +1,107 @@
-<p>meus-livros works!</p>
+<div class="home-container">
+  <nav class="navbar">
+    <div class="nav-content">
+      
+      <div class="nav-left-brand">
+        <div class="user-avatar-nav">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto de Perfil">
+        </div>
+        <div class="logo">
+          <span>LUMIERE</span>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a routerLink="/home">Home</a>
+        <a [routerLink]="['/meus-livros']" class="active">Meus Livros</a>
+        <a routerLink="/interesses">Interesses</a>
+        <a href="#">Empréstimos</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
+      </div>
+
+    </div>
+  </nav>
+
+  <main class="main-content profile-layout-adjustment">
+    <div class="content-layout">
+      
+      <aside class="filters-sidebar">
+        <div class="profile-card">
+          <div class="profile-header-info">
+            <div class="profile-avatar">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto do usuário">
+              <button class="btn-edit-avatar" title="Mudar foto"><i class="fa-solid fa-camera"></i></button>
+            </div>
+            <h2 class="cinzel-title user-name">Beatriz Silva</h2>
+            <p class="user-location"><i class="fa-solid fa-location-dot"></i> São Paulo, SP</p>
+          </div>
+
+          <hr class="divider">
+
+          <div class="profile-mini-stats">
+            <div class="mini-stat">
+              <span class="value">{{ meusLivros.length }}</span>
+              <span class="label">Meus Livros</span>
+            </div>
+            <div class="mini-stat">
+              <span class="value">14</span>
+              <span class="label">Matches</span>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <button class="btn-add-book" (click)="abrirModalCadastro()">
+            <i class="fa-solid fa-plus"></i> Adicionar Novo Livro
+          </button>
+        </div>
+      </aside>
+
+      <div class="books-dashboard">
+        <section class="section-header-profile">
+          <h2 class="cinzel-title">Minha Estante</h2>
+          <p>Gerencie os livros que você disponibilizou para a comunidade.</p>
+        </section>
+
+        <div class="book-grid">
+          @for (livro of meusLivros; track livro.id) {
+            <div class="book-card" [class.inativo]="!livro.ativo">
+              <div class="book-cover">
+                <img [src]="livro.imagemUrl || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500'" [alt]="livro.titulo">
+                
+                @if (livro.disponivel) {
+                  <span class="badge disponível">Disponível</span>
+                } @else {
+                  <span class="badge emprestado">Emprestado</span>
+                }
+              </div>
+              
+              <div class="book-info">
+                <h4>{{ livro.titulo }}</h4>
+                <p class="author">por {{ livro.autor }}</p>
+
+                <div class="profile-book-actions">
+                  <button class="btn-action-edit" title="Editar livro">
+                    <i class="fa-solid fa-pen-to-square"></i> Editar
+                  </button>
+                  <button class="btn-action-delete" title="Remover livro">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          } @empty {
+            <div class="empty-state">
+              <i class="fa-solid fa-book-bookmark"></i>
+              <p>Sua estante está vazia. Que tal desapegar de um livro hoje?</p>
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
