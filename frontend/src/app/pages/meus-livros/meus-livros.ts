@@ -4,19 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LivroService } from '../../core/services/livro.service';
 import { Livro } from '../../core/models/livro';
-
+import { CadastroLivro } from '../meus-livros/cadastro-livro/cadastro-livro';
 @Component({
   selector: 'app-meus-livros',
-  imports: [CommonModule,FormsModule, RouterModule],
+  imports: [CommonModule,FormsModule, RouterModule, CadastroLivro],
   templateUrl: './meus-livros.html',
   styleUrl: './meus-livros.css',
 })
 export class MeusLivros implements OnInit{
 meusLivros: Livro[] = [];
+modalAberta = false;
+cardExpandidoId: number | null= null;
 
 constructor(
   private livroService: LivroService,
-  private cdr: ChangeDetectorRef
+  private cdr: ChangeDetectorRef,
+
+
 
 ) {}
 
@@ -40,6 +44,37 @@ constructor(
     });
   }
 
-  abrirModalCadastro() { }
+  abrirModalCadastro() {
+    this.modalAberta = true;
+   }
+
+   fecharModalCadastro(): void {
+  this.modalAberta = false;
+
+  // Atualiza a lista para aparecer o livro recém-cadastrado
+  this.carregarLivrosDoUsuario();
+}
+
+toggleLivro(id:number):void{
+  if(this.cardExpandidoId === id){
+    this.cardExpandidoId = null;
+  }else{
+    this.cardExpandidoId = id;
+  }
+}
+
+excluirLivro(id: number): void {
+  this.livroService.excluirLivro(id).subscribe({
+    next: () => {
+      this.carregarLivrosDoUsuario();
+      console.log("EXCLUIUU")
+    },
+    error: (erro) => {
+      console.error(erro);
+    }
+
+  });
+
+}
 }
 

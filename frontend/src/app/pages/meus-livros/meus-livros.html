@@ -57,6 +57,11 @@
           <button class="btn-add-book" (click)="abrirModalCadastro()">
             <i class="fa-solid fa-plus"></i> Adicionar Novo Livro
           </button>
+         @if (modalAberta) {
+         <app-cadastro-livro
+          (fechar)="fecharModalCadastro()">
+        </app-cadastro-livro>
+          }
         </div>
       </aside>
 
@@ -66,40 +71,103 @@
           <p>Gerencie os livros que você disponibilizou para a comunidade.</p>
         </section>
 
-        <div class="book-grid">
-          @for (livro of meusLivros; track livro.id) {
-            <div class="book-card" [class.inativo]="!livro.ativo">
-              <div class="book-cover">
-                <img [src]="livro.imagemUrl || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500'" [alt]="livro.titulo">
-                
-                @if (livro.disponivel) {
-                  <span class="badge disponível">Disponível</span>
-                } @else {
-                  <span class="badge emprestado">Emprestado</span>
-                }
-              </div>
-              
-              <div class="book-info">
-                <h4>{{ livro.titulo }}</h4>
-                <p class="author">por {{ livro.autor }}</p>
+       <div class="book-grid">
 
-                <div class="profile-book-actions">
-                  <button class="btn-action-edit" title="Editar livro">
-                    <i class="fa-solid fa-pen-to-square"></i> Editar
-                  </button>
-                  <button class="btn-action-delete" title="Remover livro">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                </div>
-              </div>
+  @for (livro of meusLivros; track livro.id) {
+
+    <div class="book-card"
+         [class.expandido]="cardExpandidoId === livro.id"
+         (click)="toggleLivro(livro.id)">
+
+      <div class="book-cover">
+        <img
+          [src]="livro.imagemUrl || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500'"
+          [alt]="livro.titulo">
+
+        @if (livro.disponivel) {
+          <span class="badge disponível">Disponível</span>
+        } @else {
+          <span class="badge emprestado">Emprestado</span>
+        }
+      </div>
+
+      <div class="book-info">
+
+        <h4>{{ livro.titulo }}</h4>
+
+        <p class="author">
+          por {{ livro.autor }}
+        </p>
+
+        <!-- DETALHES EXPANDIDOS -->
+        @if (cardExpandidoId === livro.id) {
+
+          <div class="livro-detalhes">
+
+            <p>
+              <strong>Descrição:</strong>
+              {{ livro.descricao || 'Sem descrição' }}
+            </p>
+
+            <p>
+              <strong>Gênero:</strong>
+              {{ livro.generoLivro }}
+            </p>
+
+            <p>
+              <strong>Modalidade:</strong>
+              {{ livro.tipoInteracao }}
+            </p>
+
+            <p>
+              <strong>Status:</strong>
+
+              @if (livro.disponivel) {
+                Disponível
+              } @else {
+                Emprestado
+              }
+            </p>
+
+            <div class="profile-book-actions">
+
+              <button
+                class="btn-action-edit"
+                (click)="$event.stopPropagation()">
+
+                <i class="fa-solid fa-pen-to-square"></i>
+                Editar
+
+              </button>
+                  <button
+        class="btn-action-delete"
+        (click)="excluirLivro(livro.id); $event.stopPropagation()">
+
+        <i class="fa-solid fa-trash-can"></i>
+        Excluir
+
+      </button>
+
             </div>
-          } @empty {
-            <div class="empty-state">
-              <i class="fa-solid fa-book-bookmark"></i>
-              <p>Sua estante está vazia. Que tal desapegar de um livro hoje?</p>
-            </div>
-          }
-        </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  } @empty {
+
+    <div class="empty-state">
+      <i class="fa-solid fa-book-bookmark"></i>
+      <p>Sua estante está vazia.</p>
+    </div>
+
+  }
+
+</div>
       </div>
 
     </div>

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CadastroLivro } from '../meus-livros/cadastro-livro/cadastro-livro';
 
 import { MeusLivros } from './meus-livros';
 

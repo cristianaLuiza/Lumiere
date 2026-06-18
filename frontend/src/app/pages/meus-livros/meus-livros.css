@@ -341,3 +341,40 @@
 .book-card.inativo { opacity: 0.5; pointer-events: none; }
 .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px; color: #64748b; }
 .empty-state i { font-size: 48px; margin-bottom: 16px; color: #334155; }
+
+.book-card {
+  cursor: pointer;
+  transition: all .3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+}
+
+.book-card.expandido {
+  transform: scale(1.02);
+}
+
+.livro-detalhes {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255,255,255,.1);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  animation: aparecer .3s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
