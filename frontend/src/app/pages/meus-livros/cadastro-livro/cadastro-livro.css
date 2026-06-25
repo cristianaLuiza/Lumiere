@@ -1,153 +1,226 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-
-  background: rgba(0,0,0,.75);
-
-  backdrop-filter: blur(8px);
-
+  background: rgba(15, 23, 42, 0.75); /* Combinando com o fundo slate */
   display: flex;
   justify-content: center;
   align-items: center;
-
-  z-index: 9999;
+  z-index: 99999;
+  backdrop-filter: blur(8px); /* Blur ligeiramente maior para foco total na modal */
+  transition: all 0.3s ease;
 }
 
 .modal-book {
-  width: 850px;
-  max-width: 95%;
+  width: 760px; /* Um pouco mais compacto para melhor leitura */
+  max-width: 92vw;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px; /* Bordas ligeiramente mais suaves */
+  padding: 32px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  animation: abrirModal 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  background: #161b22;
+/* Scrollbar moderna e discreta para a modal */
+.modal-book::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-book::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-book::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+.modal-book::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
 
-  border: 1px solid rgba(255,255,255,.08);
-
-  border-radius: 24px;
-
-  padding: 28px;
-
-  box-shadow:
-      0 25px 50px rgba(0,0,0,.4);
-
-  color: white;
+@keyframes abrirModal {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 24px;
+  align-items: flex-start; /* Alinha melhor com textos de duas linhas */
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 16px;
 }
 
-.modal-header h2 {
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-info i {
+  font-size: 28px;
+  color: #d4a017;
+  background: rgba(212, 160, 23, 0.1);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.header-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Espaço entre título e subtítulo */
+}
+
+.header-info h2 {
   margin: 0;
-  font-size: 1.5rem;
+  color: #f8fafc;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header-info span {
+  color: #94a3b8;
+  font-size: 14px;
 }
 
 .btn-close {
-  background: transparent;
+  width: 38px;
+  height: 38px;
   border: none;
-
-  color: #bdbdbd;
-
+  border-radius: 10px;
+  background: #1e293b;
+  color: #94a3b8;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
 
-  font-size: 1.3rem;
+.btn-close:hover {
+  background: #334155;
+  color: #f8fafc;
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 4px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  margin-bottom: 8px;
-
-  color: #d1d5db;
-
-  font-size: .9rem;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 .form-group input,
-.form-group textarea,
-.form-group select {
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: #1e293b; /* Ajustado para dar profundidade sobre o fundo da modal */
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: #f8fafc;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
 
-  background: #202733;
-
-  border: 1px solid #313c4d;
-
-  border-radius: 12px;
-
-  color: white;
-
-  padding: 14px;
-
-  font-size: .95rem;
+/* Estilização dos placeholders */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #64748b;
 }
 
 .form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #d4a017;
+  background: #111827;
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15); /* Efeito glow sutil */
+}
 
-  outline: none;
-
-  border-color: #8b5cf6;
-
-  box-shadow: 0 0 0 3px rgba(139,92,246,.15);
+textarea {
+  resize: none;
 }
 
 .modal-actions {
-
   display: flex;
-
   justify-content: flex-end;
-
   gap: 12px;
+  margin-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 20px;
+}
 
-  margin-top: 24px;
+.btn-cancel,
+.btn-save,
+.btn-edit {
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-cancel {
+  background: #1e293b;
+  color: #94a3b8;
+}
 
-  background: transparent;
-
-  border: 1px solid #3b4657;
-
-  color: white;
-
-  padding: 12px 18px;
-
-  border-radius: 12px;
-
-  cursor: pointer;
+.btn-cancel:hover {
+  background: #334155;
+  color: #f8fafc;
 }
 
 .btn-save {
+  background: #d4a017;
+  color: #0f172a; /* Texto escuro no botão dourado dá mais leitura */
+}
 
-  background: linear-gradient(
-      135deg,
-      #7c3aed,
-      #9333ea
-  );
+.btn-save:hover {
+  background: #e5b32f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.2);
+}
 
-  border: none;
-
+.btn-edit {
+  background: #2563eb;
   color: white;
+}
 
-  padding: 12px 22px;
+.btn-edit:hover {
+  background: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
 
-  border-radius: 12px;
-
-  font-weight: 600;
-
-  cursor: pointer;
+.btn-save:active,
+.btn-edit:active {
+  transform: translateY(1px);
 }

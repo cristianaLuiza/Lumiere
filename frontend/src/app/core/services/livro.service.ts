@@ -55,4 +55,11 @@ excluirLivro(id: number): Observable<string> {
     { responseType: 'text' }
   );
 }
+
+atualizarLivro(idUsuario: number, livro:LivroCadastrado):Observable<Livro>{
+  return this.http.put<Livro>(
+     `${this.apiUrl}/${idUsuario}`, 
+     livro
+  );
+}
 }

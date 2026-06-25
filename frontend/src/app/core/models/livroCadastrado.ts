@@ -4,5 +4,5 @@ export interface LivroCadastrado{
   descricao: string;
   generoLivro: string;
   tipoInteracao: string;
-  imagemUrl: string;
+  //imagemUrl: string;
 }

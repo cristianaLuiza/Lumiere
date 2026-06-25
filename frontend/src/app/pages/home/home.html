@@ -109,39 +109,67 @@
       </aside>
 
       <div class="book-grid">
-        @for (livro of livros(); track livro.id) {
-          <div class="book-card" [class.inativo]="!livro.ativo">
-            <div class="book-cover">
-              <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500" [alt]="livro.titulo">
-              @if (livro.disponivel) {
-                <span class="badge disponível">Disponível</span>
-              } @else {
-                <span class="badge emprestado">Indisponível</span>
-              }
-            </div>
-            
-            <div class="book-info">
-              <h4>{{ livro.titulo }}</h4>
-              <p class="author">por {{ livro.autor }}</p>
 
-              @if (livro.generoLivro) {
-                <span class="book-genre"><i class="fa-solid fa-bookmark"></i> {{ livro.generoLivro }}</span>
-              }
-              @if (livro.descricao) {
-                <p class="description">{{ livro.descricao }}</p>
-              }
-              @if (livro.tipoInteracao) {
-                <div class="interaction-type"><i class="fa-solid fa-circle-info"></i> Modalidade: {{ livro.tipoInteracao }}</div>
-              }
-            </div>
-          </div>
-        } @empty {
-          <div class="empty-state">
-            <i class="fa-solid fa-book-open-reader"></i>
-            <p>Nenhum livro foi encontrado no momento.</p>
+  @for (livro of livros(); track livro.id) {
+
+    <div
+      class="book-card"
+      [class.match]="temMatch(livro.id)"
+      [class.inativo]="!livro.ativo">
+
+      <div class="book-cover">
+<button
+  class="btn-match"
+  (click)="demonstrarInteresse(livro.id); $event.stopPropagation()">
+
+  <i class="fa-solid fa-heart"></i>
+
+  {{ temMatch(livro.id) ? 'Matched' : 'Match' }}
+
+</button>
+
+        <img
+          src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500"
+          [alt]="livro.titulo">
+
+      </div>
+
+      <div class="book-info">
+        <h4>{{ livro.titulo }}</h4>
+        <p class="author">por {{ livro.autor }}</p>
+
+        @if (livro.generoLivro) {
+          <span class="book-genre">
+            <i class="fa-solid fa-bookmark"></i>
+            {{ livro.generoLivro }}
+          </span>
+        }
+
+        @if (livro.descricao) {
+          <p class="description">{{ livro.descricao }}</p>
+        }
+
+        @if (livro.tipoInteracao) {
+          <div class="interaction-type">
+            <i class="fa-solid fa-circle-info"></i>
+            Modalidade: {{ livro.tipoInteracao }}
           </div>
         }
       </div>
+
     </div>
+
+  } @empty {
+
+    <div class="empty-state">
+      <i class="fa-solid fa-book-open-reader"></i>
+      <p>Nenhum livro foi encontrado no momento.</p>
+    </div>
+
+  }
+
+</div>
+    </div>
+
   </main>
 </div>

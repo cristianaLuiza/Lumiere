@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { LivroService } from '../../core/services/livro.service';
 import { Livro } from '../../core/models/livro';
 import { CadastroLivro } from '../meus-livros/cadastro-livro/cadastro-livro';
+import { LivroCadastrado } from '../../core/models/livroCadastrado';
+import { Input } from '@angular/core';
 @Component({
   selector: 'app-meus-livros',
   imports: [CommonModule,FormsModule, RouterModule, CadastroLivro],
@@ -15,12 +17,12 @@ export class MeusLivros implements OnInit{
 meusLivros: Livro[] = [];
 modalAberta = false;
 cardExpandidoId: number | null= null;
+livroSelecionado?: Livro;
+
 
 constructor(
   private livroService: LivroService,
   private cdr: ChangeDetectorRef,
-
-
 
 ) {}
 
@@ -30,7 +32,7 @@ constructor(
   }
 
   carregarLivrosDoUsuario(): void {
-    const idDoUsuarioLogado = 1; // Substitua pelo ID do usuário simulado ou logado
+    const idDoUsuarioLogado = 1;
 
     this.livroService.listarLivroId(idDoUsuarioLogado).subscribe({
       next: (dados) => {
@@ -67,14 +69,20 @@ excluirLivro(id: number): void {
   this.livroService.excluirLivro(id).subscribe({
     next: () => {
       this.carregarLivrosDoUsuario();
-      console.log("EXCLUIUU")
     },
     error: (erro) => {
-      console.error(erro);
+      console.error("Erro ao excluir!",erro);
     }
 
   });
-
 }
+
+editarLivro(livro: Livro): void {
+
+  this.livroSelecionado = livro;
+
+  this.modalAberta = true;
+}
+
 }
 

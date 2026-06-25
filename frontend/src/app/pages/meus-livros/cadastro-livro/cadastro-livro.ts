@@ -1,64 +1,95 @@
-import { Component } from '@angular/core';
-import { Livro } from '../../../core/models/livro'
-import { LivroService } from '../../../core/services/livro.service';
-import { LivroCadastrado } from '../../../core/models/livroCadastrado'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Output, EventEmitter } from '@angular/core';
+
+import { Livro } from '../../../core/models/livro';
+import { LivroCadastrado } from '../../../core/models/livroCadastrado';
+import { LivroService } from '../../../core/services/livro.service';
 
 @Component({
   selector: 'app-cadastro-livro',
+  standalone: true,
   imports: [FormsModule],
   templateUrl: './cadastro-livro.html',
   styleUrl: './cadastro-livro.css',
 })
-export class CadastroLivro {
+export class CadastroLivro implements OnInit {
+
   @Output()
   fechar = new EventEmitter<void>();
-livros: Livro[] = [];
 
+  @Input()
+  livro?: Livro;
+
+  modoEdicao = false;
+  idLivroEdicao = 0;
+
+  novoLivro: LivroCadastrado = {
+    titulo: '',
+    autor: '',
+    descricao: '',
+    generoLivro: '',
+    tipoInteracao: '',
+    //imagemUrl: ''
+  };
 
   constructor(private livroService: LivroService) {}
 
-  novoLivro: LivroCadastrado = {
-  titulo: '',
-  autor: '',
-  descricao: '',
-  generoLivro: '',
-  tipoInteracao: '',
-  imagemUrl: ''
+  ngOnInit(): void {
+
+    if (this.livro) {
+
+      this.modoEdicao = true;
+      this.idLivroEdicao = this.livro.id;
+
+      this.novoLivro = {
+        titulo: this.livro.titulo,
+        autor: this.livro.autor,
+        descricao: this.livro.descricao ?? '',
+        generoLivro: this.livro.generoLivro ?? '',
+        tipoInteracao: this.livro.tipoInteracao ?? '',
+      //  imagemUrl: this.livro.imagemUrl ?? ''
+      };
+    }
   }
 
+  salvarLivro(): void {
 
- salvarLivro(): void {
+    const idUsuario = 1;
 
-  const idUsuario = 1;
+    this.livroService.criarLivro(idUsuario, this.novoLivro)
+      .subscribe({
+        next: (livro) => {
 
-  this.livroService
-    .criarLivro(idUsuario, this.novoLivro)
-    .subscribe({
-      next: (livro) => {
-        console.log('Livro cadastrado:', livro);
+          console.log('Livro cadastrado:', livro);
 
-        this.novoLivro = {
-          titulo: '',
-          autor: '',
-          descricao: '',
-          generoLivro: '',
-          tipoInteracao: '',
-          imagemUrl: ''
-        };
-        this.fecharModal();
-      },
-      error: (erro) => {
-        console.error('Erro ao cadastrar livro', erro);
-      }
-    });
-}
+          this.fecharModal();
 
-fecharModal(): void {
-  this.fechar.emit();
-}
+        },
+        error: (erro) => {
+          console.error('Erro ao cadastrar livro', erro);
+        }
+      });
+  }
 
+  atualizarLivro(): void {
 
+    this.livroService
+      .atualizarLivro(this.idLivroEdicao, this.novoLivro)
+      .subscribe({
+        next: (resposta) => {
 
+          console.log('Livro atualizado com sucesso!', resposta);
+
+          this.fecharModal();
+
+        },
+        error: (erro) => {
+          console.error('Erro ao atualizar', erro);
+        }
+      });
+  }
+
+  fecharModal(): void {
+    this.fechar.emit();
+  }
 }

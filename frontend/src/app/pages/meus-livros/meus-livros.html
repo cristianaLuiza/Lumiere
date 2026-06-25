@@ -58,9 +58,10 @@
             <i class="fa-solid fa-plus"></i> Adicionar Novo Livro
           </button>
          @if (modalAberta) {
-         <app-cadastro-livro
-          (fechar)="fecharModalCadastro()">
-        </app-cadastro-livro>
+        <app-cadastro-livro
+  [livro]="livroSelecionado"
+  (fechar)="fecharModalCadastro()">
+</app-cadastro-livro>
           }
         </div>
       </aside>
@@ -133,7 +134,7 @@
 
               <button
                 class="btn-action-edit"
-                (click)="$event.stopPropagation()">
+                (click)="editarLivro(livro); $event.stopPropagation()">
 
                 <i class="fa-solid fa-pen-to-square"></i>
                 Editar
