@@ -23,41 +23,31 @@ public class InteresseService {
     @Autowired
     private InteresseRepository interesseRepository;
 
-    public String salvarInteresse(Interesse interesse){
+    public Interesse salvarInteresse(Interesse interesse) {
+        Livro livro = buscarLivro(interesse.getLivro().getId());
+        Usuario usuario = buscarUsuario(interesse.getUsuarioInteressado().getId());
 
-        Livro livroDesejado = interesse.getLivro();
-
-        if(!livroDesejado.getDisponivel()){
-            throw new RuntimeException("Livro indisponível!");
-        }
-
+        interesse.setLivro(livro);
+        interesse.setUsuarioInteressado(usuario);
         interesse.setStatus(StatusInteresse.PENDENTE);
+        return interesseRepository.save(interesse);
+    }
 
-        interesseRepository.save(interesse);
+    public List<Interesse> buscarPorUsuario(Long idUsuario) {
+        buscarUsuario(idUsuario); // opcional, para validar se existe
+        return interesseRepository.findByUsuarioInteressadoId(idUsuario);
+    }
 
-        Usuario usuarioInteressado = interesse.getUsuarioInteressado();
-        Usuario usuarioDono = livroDesejado.getUsuario();
-
-        if(livroDesejado.getTipoInteracao() == TipoInteracao.DOACAO){
-            return "Sucesso! O dono do livro será notificado.";
+    public Livro buscarLivro(long id){
+        return livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
+    }
+    public Usuario buscarUsuario(long id ){
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+    }
+    public void validarLivroDisponivel(Livro livro){
+        if(!livro.getDisponivel()){
+            throw new RuntimeException("Livro Indisponível");
         }
-
-        if(livroDesejado.getTipoInteracao() == TipoInteracao.TROCA){
-
-            boolean existeInteresseMutuo =
-                    interesseRepository.existsByUsuarioInteressadoAndLivroUsuario(
-                            usuarioDono,
-                            usuarioInteressado
-                    );
-
-            if(existeInteresseMutuo){
-                return "É um Match de Troca!";
-            }
-
-            return "Interesse registrado! Se o dono gostar de algum livro seu, o match acontece.";
-        }
-
-        return "Interesse registrado!";
     }
 
     public Interesse aceitarouRecusar(long id, StatusInteresse status){

@@ -11,15 +11,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/interesse")
+@CrossOrigin(origins = "http://localhost:4200")
 public class InteresseController {
 
     @Autowired
     private InteresseService interesseService;
 
-    @PostMapping()
-    public String salvarInteresse(@RequestBody Interesse interesse){
+    @PostMapping
+    public Interesse salvarInteresse(@RequestBody Interesse interesse) {
         return interesseService.salvarInteresse(interesse);
     }
+    @GetMapping("/usuario/{id}")
+    public List<Interesse> buscarPorUsuario(@PathVariable Long id) {
+        return interesseService.buscarPorUsuario(id);
+    }
+
 
     @GetMapping("/recebidos/usuarios/{usuarios_id}")
     public List<Interesse> interessadosNoLivro(@PathVariable long usuarios_id){

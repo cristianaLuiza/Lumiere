@@ -13,6 +13,8 @@ public class Interesse {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
 
+
+
     @ManyToOne
     @JoinColumn (name="usuario_interessado_id")
     private Usuario usuarioInteressado;

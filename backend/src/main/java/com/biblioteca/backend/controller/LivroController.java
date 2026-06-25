@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/livros") // No plural para seguir o padrão REST
+@RequestMapping("/livros")
 @CrossOrigin(origins = "http://localhost:4200")
 public class LivroController {
 
@@ -21,6 +21,7 @@ public class LivroController {
     public Livro cadastrarLivro(@RequestBody Livro livro, @PathVariable long id){
         return livroService.salvar(livro, id);
     }
+
 
 
     // GET /livros

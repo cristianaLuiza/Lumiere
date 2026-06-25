@@ -19,6 +19,8 @@ public class LivroService {
     @Autowired
     private UserRepository userRepository;
 
+
+
     public Livro salvar(Livro livro, Long id) {
         Optional<Usuario> usuario = userRepository.findById(id);
         if (usuario.isPresent()) {
@@ -62,6 +64,10 @@ public class LivroService {
         livroExistente.setTitulo(livroAtualizado.getTitulo());
         livroExistente.setAutor(livroAtualizado.getAutor());
         livroExistente.setDescricao(livroAtualizado.getDescricao());
+        livroExistente.setGeneroLivro(livroAtualizado.getGeneroLivro());
+        livroExistente.setTipoInteracao(livroAtualizado.getTipoInteracao());
+
+
 
         return livroRepository.save(livroExistente);
     }
