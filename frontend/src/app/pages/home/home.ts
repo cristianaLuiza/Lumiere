@@ -29,10 +29,11 @@ export class Home implements OnInit {
   ngOnInit(): void {
     this.carregarLivros();
     this.carregarMeusInteresses();
+    
   }
 
   carregarMeusInteresses(): void {
-    this.interesseService.buscarPorUsuario(1)
+    this.interesseService.listarInteressesRecebidos(1)
       .subscribe({
         next: (interesses) => {
 
@@ -118,23 +119,4 @@ export class Home implements OnInit {
       }
     };
 
-    this.interesseService.salvarInteresse(interesse)
-      .subscribe({
-
-        next: (interesseSalvo) => {
-
-          console.log('INTERESSE SALVO', interesseSalvo);
-
-          if (interesseSalvo.status === 'PENDENTE') {
-            this.toggleMatch(idLivro);
-          }
-
-        },
-
-        error: (erro) => {
-          console.error(erro);
-        }
-
-      });
-  }
-}
+  }}

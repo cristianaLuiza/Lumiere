@@ -1,1 +1,84 @@
-<p>interesses works!</p>
+<div class="home-container">
+  <nav class="navbar">
+    <div class="nav-content">
+      
+      <div class="nav-left-brand">
+        <div class="user-avatar-nav">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto de Perfil">
+        </div>
+        <div class="logo">
+          <span>LUMIERE</span>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a routerLink="/home">Home</a>
+        <a [routerLink]="['/meus-livros']">Meus Livros</a>
+        <a [routerLink]="['/interesses']" class="active">Interesses</a>
+        <a href="#">Empréstimos</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="interesses-container">
+
+  <h2>Solicitações de Interesse</h2>
+
+  <p>Total: {{ interesses.length }}</p>
+
+  @for(interesse of interesses; track interesse.id){
+
+    <div class="card">
+
+      <div class="card-info">
+
+        <img
+          class="avatar"
+          src="https://ui-avatars.com/api/?name={{interesse.usuarioInteressado.username}}&background=4F46E5&color=fff"
+          alt="Avatar">
+
+        <div class="texto">
+
+          <h3>{{ interesse.usuarioInteressado.username }}</h3>
+
+          <p>
+            demonstrou interesse no livro
+            <strong>{{ interesse.livro.titulo }}</strong>
+          </p>
+
+          <span class="status">
+            {{ interesse.status }}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="acoes">
+
+        <button class="btn aceitar"
+                (click)="aceitar(interesse.id)">
+          Aceitar
+        </button>
+
+        <button class="btn recusar"
+                (click)="recusar(interesse.id)">
+          Recusar
+        </button>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>
+
+
+  
+</div>

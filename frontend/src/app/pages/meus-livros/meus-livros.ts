@@ -5,8 +5,7 @@ import { RouterModule } from '@angular/router';
 import { LivroService } from '../../core/services/livro.service';
 import { Livro } from '../../core/models/livro';
 import { CadastroLivro } from '../meus-livros/cadastro-livro/cadastro-livro';
-import { LivroCadastrado } from '../../core/models/livroCadastrado';
-import { Input } from '@angular/core';
+
 @Component({
   selector: 'app-meus-livros',
   imports: [CommonModule,FormsModule, RouterModule, CadastroLivro],
@@ -37,7 +36,6 @@ constructor(
     this.livroService.listarLivroId(idDoUsuarioLogado).subscribe({
       next: (dados) => {
         this.meusLivros = dados;
-        console.log("DADOS:",dados)
         this.cdr.detectChanges();
       },
       error: (erro) => {
