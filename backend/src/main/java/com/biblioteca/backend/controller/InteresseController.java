@@ -1,14 +1,10 @@
 package com.biblioteca.backend.controller;
-
-
-import com.biblioteca.backend.enums.StatusInteresse;
 import com.biblioteca.backend.model.Interesse;
 import com.biblioteca.backend.service.InteresseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/interesse")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -18,33 +14,27 @@ public class InteresseController {
     private InteresseService interesseService;
 
     @PostMapping
-    public Interesse salvarInteresse(@RequestBody Interesse interesse) {
-        return interesseService.salvarInteresse(interesse);
-    }
-    @GetMapping("/usuario/{id}")
-    public List<Interesse> buscarPorUsuario(@PathVariable Long id) {
-        return interesseService.buscarPorUsuario(id);
+    public Interesse criarInteresse(@RequestBody Interesse interesse){
+        return interesseService.criarInteresse(interesse);
     }
 
-
-    @GetMapping("/recebidos/usuarios/{usuarios_id}")
-    public List<Interesse> interessadosNoLivro(@PathVariable long usuarios_id){
-        return interesseService.interessadosNoLivro(usuarios_id);
+    @PostMapping("/{interesseId}/criarChat")
+    public Interesse aceitarInteresse(@PathVariable Long interesseId){
+        return interesseService.aceitarInteresse(interesseId);
     }
 
-    @PutMapping("/{id}/aceitar")
-    public Interesse aceitarInteresse(@PathVariable long id){
-        return interesseService.aceitarouRecusar(id, StatusInteresse.ACEITO);
+    @PatchMapping("/{interesseId}/recusar")
+    public Interesse recusarInteresse(@PathVariable Long interesseId){
+        return interesseService.recusarInteresse(interesseId);
     }
 
-    @PutMapping("/{id}/recusar")
-    public Interesse recusarInteresse(@PathVariable long id){
-        return interesseService.aceitarouRecusar(id, StatusInteresse.RECUSADO);
+    @GetMapping("{usuarioId}/enviados")
+    public List<Interesse> listarInteressesEnviados(@PathVariable Long usuarioId){
+        return interesseService.listarInteressesEnviados(usuarioId);
     }
 
-    @GetMapping("/enviados/{id}")
-    public List<Interesse> interessesEnviados(@PathVariable Long usuarios_id){
-        return interesseService.interessesEnviados(usuarios_id);
+    @GetMapping("{usuarioId}/recebidos")
+    public List<Interesse> listarInteressesRecebidos(@PathVariable Long usuarioId){
+        return interesseService.listarInteressesRecebidos(usuarioId);
     }
 }
-//TESTAR ROTA interessesEnviados E AS DE RECUSA E ACEITE DE INTERESSE

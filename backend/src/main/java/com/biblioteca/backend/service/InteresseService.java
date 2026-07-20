@@ -1,6 +1,6 @@
 package com.biblioteca.backend.service;
+
 import com.biblioteca.backend.enums.StatusInteresse;
-import com.biblioteca.backend.enums.TipoInteracao;
 import com.biblioteca.backend.model.Interesse;
 import com.biblioteca.backend.model.Livro;
 import com.biblioteca.backend.model.Usuario;
@@ -9,10 +9,14 @@ import com.biblioteca.backend.repository.LivroRepository;
 import com.biblioteca.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class InteresseService {
+
+    @Autowired
+    private InteresseRepository interesseRepository;
 
     @Autowired
     private LivroRepository livroRepository;
@@ -20,56 +24,77 @@ public class InteresseService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private InteresseRepository interesseRepository;
 
-    public Interesse salvarInteresse(Interesse interesse) {
-        Livro livro = buscarLivro(interesse.getLivro().getId());
-        Usuario usuario = buscarUsuario(interesse.getUsuarioInteressado().getId());
+    public Interesse criarInteresse(Interesse interesse) {
+
+        Livro livro = buscarLivroPorId(interesse.getLivro().getId());
+        Usuario usuario = buscarUsuarioPorId(interesse.getUsuarioInteressado().getId());
 
         interesse.setLivro(livro);
         interesse.setUsuarioInteressado(usuario);
         interesse.setStatus(StatusInteresse.PENDENTE);
+
         return interesseRepository.save(interesse);
     }
 
-    public List<Interesse> buscarPorUsuario(Long idUsuario) {
-        buscarUsuario(idUsuario); // opcional, para validar se existe
-        return interesseRepository.findByUsuarioInteressadoId(idUsuario);
+    public Livro buscarLivroPorId(Long livroId) {
+        return livroRepository.findById(livroId)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado."));
     }
 
-    public Livro buscarLivro(long id){
-        return livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
-    }
-    public Usuario buscarUsuario(long id ){
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-    }
-    public void validarLivroDisponivel(Livro livro){
-        if(!livro.getDisponivel()){
-            throw new RuntimeException("Livro Indisponível");
-        }
+    public Usuario buscarUsuarioPorId(Long usuarioId) {
+
+        return userRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
     }
 
-    public Interesse aceitarouRecusar(long id, StatusInteresse status){
-        Interesse interesse = interesseRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Interesse não encontrado"));
-        interesse.setStatus(status);
 
-        if(status == StatusInteresse.ACEITO){
-            Livro livro = interesse.getLivro();
-            livro.setDisponivel(false);
-            livroRepository.save(livro);
-        }
+    public Interesse aceitarInteresse(Long interesseId) {
+
+        Interesse interesse = buscarInteressePorId(interesseId);
+
+        interesse.setStatus(StatusInteresse.ACEITO);
+
+        Livro livro = interesse.getLivro();
+        livro.setDisponivel(false);
+
+        livroRepository.save(livro);
+
+        // TODO: Criar chat entre os usuários
+
         return interesseRepository.save(interesse);
     }
 
 
-    public List<Interesse> interessadosNoLivro(long usuarios_id){
-    return interesseRepository.findByLivroUsuarioId(usuarios_id);
+    public Interesse recusarInteresse(Long interesseId) {
+
+        Interesse interesse = buscarInteressePorId(interesseId);
+
+        interesse.setStatus(StatusInteresse.RECUSADO);
+
+        return interesseRepository.save(interesse);
     }
 
-    public List<Interesse> interessesEnviados(long id){
-        return interesseRepository.findByUsuarioInteressadoId(id);
+
+    public Interesse buscarInteressePorId(Long interesseId) {
+
+        return interesseRepository.findById(interesseId)
+                .orElseThrow(() -> new RuntimeException("Interesse não encontrado."));
+    }
+
+
+    public List<Interesse> listarInteressesEnviados(Long usuarioId) {
+
+        buscarUsuarioPorId(usuarioId);
+
+        return interesseRepository.findByUsuarioInteressadoId(usuarioId);
+    }
+
+    public List<Interesse> listarInteressesRecebidos(Long usuarioId) {
+
+        buscarUsuarioPorId(usuarioId);
+
+        return interesseRepository.findByLivroUsuarioId(usuarioId);
     }
 
 }
