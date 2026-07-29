@@ -20,11 +20,13 @@ public class InteresseController {
 
     @PostMapping("/{interesseId}/criarChat")
     public Interesse aceitarInteresse(@PathVariable Long interesseId){
+        System.out.println("ENTROU NO ACEITAR");
         return interesseService.aceitarInteresse(interesseId);
     }
 
     @PatchMapping("/{interesseId}/recusar")
     public Interesse recusarInteresse(@PathVariable Long interesseId){
+        System.out.println("ENTROU NO CONTROLLER");
         return interesseService.recusarInteresse(interesseId);
     }
 
@@ -36,5 +38,14 @@ public class InteresseController {
     @GetMapping("{usuarioId}/recebidos")
     public List<Interesse> listarInteressesRecebidos(@PathVariable Long usuarioId){
         return interesseService.listarInteressesRecebidos(usuarioId);
+    }
+
+    @DeleteMapping("/{livroId}/{usuarioId}")
+    public void cancelarInteresse(
+            @PathVariable Long livroId,
+            @PathVariable Long usuarioId){
+
+        interesseService.cancelarInteresse(livroId, usuarioId);
+
     }
 }

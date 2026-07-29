@@ -15,5 +15,7 @@ public class Usuario {
     private Long id;
     private String username;
     private String senha;
+    private String nomeUsuario;
+    private String fotoUsuario;
 
 }

@@ -22,14 +22,6 @@ public class LivroController {
         return livroService.salvar(livro, id);
     }
 
-
-
-    // GET /livros
-    @GetMapping
-    public List<Livro> listarTodosLivros(){
-        return livroService.listarTodosLivros();
-    }
-
     // GET /livros/usuario/1 (Lista os livros que pertencem àquele usuário)
     @GetMapping("/usuario/{id}")
     public List<Livro> listarLivrosPorUsuario(@PathVariable long id){
@@ -42,15 +34,10 @@ public class LivroController {
         return livroService.buscarPorId(id);
     }
 
-    // GET /livros/filtrar?titulo=Harry
-    @GetMapping("/filtrar")
-    public List<Livro> filtrarLivrosNome(@RequestParam String titulo){
-        return livroService.filtrarLivrosNome(titulo);
-    }
 
-    @GetMapping("/filtrar/genero")
-    public List<Livro> filtrarLivroGenero(@RequestParam String genero){
-        return livroService.filtrarLivroGenero(genero);
+    @GetMapping
+    public List<Livro> buscarDadosLivro(@RequestParam(required = false) String texto) {
+        return livroService.buscarDadosLivro(texto);
     }
 
     //PUT/id?=1

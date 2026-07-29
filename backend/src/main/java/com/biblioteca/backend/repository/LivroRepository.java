@@ -9,14 +9,20 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface LivroRepository extends JpaRepository<Livro, Long> {
-
-    List<Livro> findByUsuario(Usuario usuario);
-
-    List<Livro>findByTituloContainingIgnoreCase(String titulo);
-
-    List<Livro>findByGeneroLivro(GeneroLivro generoLivro);
 
 
-}
+    @Repository
+    public interface LivroRepository extends JpaRepository<Livro, Long> {
+
+        List<Livro> findByUsuario(Usuario usuario);
+
+        List<Livro>findByTituloContainingIgnoreCase(String titulo);
+
+        List<Livro>findByAutorContainingIgnoreCase(String autor);
+
+        List<Livro>findByGeneroLivro(GeneroLivro generoLivro);
+
+        List<Livro> findByUsuarioIdNot(Long usuarioId);
+
+
+    }

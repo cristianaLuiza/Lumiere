@@ -7,6 +7,8 @@ import com.biblioteca.backend.repository.LivroRepository;
 import com.biblioteca.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +33,6 @@ public class LivroService {
         }
     }
 
-    public List<Livro> listarTodosLivros() {
-        return livroRepository.findAll();
-    }
-
     public List<Livro> listarLivrosPorUsuario(Long id) {
         Optional<Usuario> usuario = userRepository.findById(id);
         if (usuario.isPresent()) {
@@ -50,11 +48,56 @@ public class LivroService {
 
     }
 
-    public List<Livro> filtrarLivrosNome(String titulo) {
-        if (titulo == null || titulo.trim().isEmpty()) { //trim remove espaços em branco e isEmpty chega se o tamanhoo da string é igual a zero
+    public List<Livro> buscarDadosLivro(String texto) {
+
+        if (texto == null || texto.isBlank()) {
             return livroRepository.findAll();
         }
-        return livroRepository.findByTituloContainingIgnoreCase(titulo);
+
+        List<Livro> resultado = new ArrayList<>();
+
+        adicionarTitulos(resultado, texto);
+        adicionarAutores(resultado, texto);
+        adicionarGeneros(resultado, texto);
+
+        return resultado;
+    }
+    private void adicionarTitulos(List<Livro> resultado, String texto) {
+
+        livroRepository.findByTituloContainingIgnoreCase(texto)
+                .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
+
+    }
+
+    private void adicionarAutores(List<Livro> resultado, String texto) {
+
+        livroRepository.findByAutorContainingIgnoreCase(texto)
+                .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
+
+    }
+
+    private void adicionarGeneros(List<Livro> resultado, String texto) {
+
+        try {
+
+            GeneroLivro genero = GeneroLivro.valueOf(texto.toUpperCase());
+
+            livroRepository.findByGeneroLivro(genero)
+                    .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
+
+        } catch (IllegalArgumentException e) {
+            // não era um gênero válido
+        }
+
+    }
+    private void adicionarSeNaoExiste(List<Livro> resultado, Livro livro) {
+
+        boolean existe = resultado.stream()
+                .anyMatch(l -> l.getId().equals(livro.getId()));
+
+        if (!existe) {
+            resultado.add(livro);
+        }
     }
 
     public Livro atualizarLivro(long id, Livro livroAtualizado){
@@ -72,16 +115,7 @@ public class LivroService {
         return livroRepository.save(livroExistente);
     }
 
-    public List<Livro> filtrarLivroGenero(String genero){
 
-        if(genero == null || genero.trim().isEmpty()){
-            return livroRepository.findAll();
-        }
-
-        GeneroLivro generoLivro = GeneroLivro.valueOf(genero);
-
-        return livroRepository.findByGeneroLivro(generoLivro);
-    }
     public String excluirLivro(Long id) {
        if(!livroRepository.existsById(id)){
            throw new RuntimeException("O livro com o ID:" + id + " não foi encontrado");

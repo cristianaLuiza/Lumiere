@@ -76,6 +76,7 @@ public class InteresseService {
     }
 
 
+
     public Interesse buscarInteressePorId(Long interesseId) {
 
         return interesseRepository.findById(interesseId)
@@ -84,9 +85,7 @@ public class InteresseService {
 
 
     public List<Interesse> listarInteressesEnviados(Long usuarioId) {
-
         buscarUsuarioPorId(usuarioId);
-
         return interesseRepository.findByUsuarioInteressadoId(usuarioId);
     }
 
@@ -95,6 +94,16 @@ public class InteresseService {
         buscarUsuarioPorId(usuarioId);
 
         return interesseRepository.findByLivroUsuarioId(usuarioId);
+    }
+
+    public void cancelarInteresse(Long livroId, Long usuarioId){
+
+        Interesse interesse = interesseRepository
+                .findByLivroIdAndUsuarioInteressadoId(livroId, usuarioId)
+                .orElseThrow();
+
+        interesseRepository.delete(interesse);
+
     }
 
 }

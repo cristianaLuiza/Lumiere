@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InteresseRepository extends JpaRepository<Interesse, Long> {
@@ -17,5 +18,9 @@ public interface InteresseRepository extends JpaRepository<Interesse, Long> {
     List<Interesse> findByLivroUsuarioId(Long usuarios_id);
 
     List<Interesse> findByUsuarioInteressadoId(Long id);
+
+    Optional<Interesse> findByLivroIdAndUsuarioInteressadoId(
+            Long livroId,
+            Long usuarioId);
 
 }
