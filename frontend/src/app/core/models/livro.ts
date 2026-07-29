@@ -1,11 +1,17 @@
+
 export interface Livro {
-imagemUrl: any;
+
     id: number;
+    imagemUrl: any;
     titulo: string;
     autor: string;
-    descricao: string | null;
-    disponivel: boolean | null;
+    descricao: string;
+    disponivel: boolean;
     ativo: boolean;
-    tipoInteracao: string | null;
-    generoLivro: string | null;
-  }
+    tipoInteracao: string;
+    generoLivro: string;
+
+    usuarioId: number;
+    nomeUsuario: string;
+    fotoUsuario: string;
+}

@@ -36,17 +36,17 @@
       <div class="hero-search">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Qual livro você está procurando hoje?"
-            [(ngModel)]="tituloBusca"
-            (input)="buscarLivroTitulo()">
+         <input
+    type="text"
+    placeholder="Qual livro você está procurando hoje?"
+    [(ngModel)]="textoBusca"
+    (input)="buscarLivro()">
         </div>
       </div>
 
       <div class="stats-bar">
         <div class="stat-item">
-          <span class="stat-value">{{ livros.length }}</span>
+          <span class="stat-value">{{ livros().length }}</span>
           <span class="stat-label"><i class="fa-solid fa-book"></i> Livros cadastrados</span>
         </div>
         <div class="stat-item">
@@ -78,12 +78,16 @@
           
           <div class="filter-group">
             <label>Título ou autor</label>
-            <input type="text" placeholder="Ex: George Orwell">
+           <input
+    type="text"
+    placeholder="Ex: George Orwell"
+    [(ngModel)]="textoBusca"
+    (input)="buscarLivro()">
           </div>
 
           <div class="filter-group">
             <label>Categoria</label>
-            <select [(ngModel)]="generoBusca" (change)="buscarLivroGenero()">
+            <select [(ngModel)]="buscarLivro" (change)="buscarLivro()">
               <option value="">Todos os gêneros</option>
               <option value="Romance">Romance</option>
               <option value="Fantasia">Fantasia</option>
@@ -120,19 +124,33 @@
       <div class="book-cover">
 <button
   class="btn-match"
-  (click)="demonstrarInteresse(livro.id); $event.stopPropagation()">
+  (click)="demonstrarInteresse(livro); $event.stopPropagation()">
 
-  <i class="fa-solid fa-heart"></i>
+  <i
+    class="fa-solid"
+    [class.fa-heart]="temMatch(livro.id)"
+    [class.fa-heart-crack]="!temMatch(livro.id)">
+  </i>
 
   {{ temMatch(livro.id) ? 'Matched' : 'Match' }}
 
 </button>
-
         <img
           src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500"
           [alt]="livro.titulo">
 
       </div>
+      
+
+      <div class="user-card" [routerLink]="['/perfil', livro.usuarioId]">
+
+    <img
+        class="user-photo"
+        [src]="livro.fotoUsuario">
+
+    <span>{{ livro.nomeUsuario }}</span>
+
+</div>
 
       <div class="book-info">
         <h4>{{ livro.titulo }}</h4>

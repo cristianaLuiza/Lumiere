@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Interesse } from '../models/interesse.ts'
+import { Interesse } from '../models/interesse.ts';
+import { CriarInteresse } from '../models/criarInteresse';
+
 
 
 @Injectable({
@@ -14,10 +15,16 @@ export class InteresseService {
 
   constructor(private http: HttpClient) {}
 
-criarInteresse(interesse: Interesse) {
+criarInteresse(interesse: CriarInteresse) {
   return this.http.post<Interesse>(
     this.apiUrl,
     interesse
+  );
+}
+
+cancelarInteresse(livroId: number, usuarioId: number) {
+  return this.http.delete<void>(
+    `${this.apiUrl}/${livroId}/${usuarioId}`
   );
 }
 

@@ -29,11 +29,16 @@ export class Interesses implements OnInit{
     const idUsuario = 1; // depois pegar do usuário logado
 
     this.interesseService.listarInteressesRecebidos(idUsuario).subscribe({
-    next: (dados) => {
-      console.log("Recebi:", dados);
+    next: (dados) => {   
+       dados.forEach(interesse => {
+    console.log(
+      "Interesse ID:", interesse.id,
+      "| Livro ID:", interesse.livro.id,
+      "| Status:", interesse.status
+    );
+  });
       this.interesses = dados;
          this.cdr.detectChanges();
-      console.log("Quantidade:", this.interesses.length);
     },
     error: (erro) => console.error(erro)
   });

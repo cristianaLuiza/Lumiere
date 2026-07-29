@@ -58,10 +58,10 @@
             <i class="fa-solid fa-plus"></i> Adicionar Novo Livro
           </button>
          @if (modalAberta) {
-        <app-cadastro-livro
-  [livro]="livroSelecionado"
-  (fechar)="fecharModalCadastro()">
-</app-cadastro-livro>
+         <app-cadastro-livro
+          [livro]="livroSelecionado"
+          (fechar)="fecharModalCadastro()">
+        </app-cadastro-livro>
           }
         </div>
       </aside>

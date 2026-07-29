@@ -379,3 +379,29 @@
 .btn-match:hover{
   transform: scale(1.05);
 }
+.user-card{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+    cursor:pointer;
+}
+
+.user-photo{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #d4af37;
+    transition:.2s;
+}
+
+.user-photo:hover{
+    transform:scale(1.05);
+}
+
+.user-name{
+    font-size:14px;
+    font-weight:600;
+    color:#333;
+}

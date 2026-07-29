@@ -5,6 +5,9 @@ import { Livro } from '../../core/models/livro';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { InteresseService } from '../../core/services/interesse.service'
+import {CriarInteresse} from'../../core/models/criarInteresse';
+import { HomeService } from '../../core/services/home.service';
+import { PerfilUsuario } from '../../core/models/Perfilusuario';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -15,15 +18,15 @@ import { InteresseService } from '../../core/services/interesse.service'
 export class Home implements OnInit {
 
   livros = signal<Livro[]>([]);
-
-  tituloBusca = '';
-  generoBusca = '';
-
+  usuario = signal<PerfilUsuario[]>([]);
+  textoBusca = '';
   matchIds = signal<Set<number>>(new Set());
+  generoSelecionado = '';
 
   constructor(
     private livroService: LivroService,
-    private interesseService: InteresseService
+    private interesseService: InteresseService,
+    private homeService: HomeService
   ) {}
 
   ngOnInit(): void {
@@ -33,12 +36,16 @@ export class Home implements OnInit {
   }
 
   carregarMeusInteresses(): void {
-    this.interesseService.listarInteressesRecebidos(1)
+
+    
+    this.interesseService.listarInteressesEnviados(1)
       .subscribe({
         next: (interesses) => {
 
+          console.log('Interesses recebidos:', interesses);
+
           const ids = interesses
-            .filter(i => i.status === 'PENDENTE')
+            .filter(i => i.status === 'PENDENTE'  && i.livro != null)
             .map(i => i.livro.id);
 
           this.matchIds.set(new Set(ids));
@@ -50,73 +57,69 @@ export class Home implements OnInit {
   }
 
   carregarLivros(): void {
-    this.livroService.listarTodos().subscribe({
+     const idUsuario = 1;
+    this.homeService.listarTodos(idUsuario).subscribe({
       next: (dados) => {
         this.livros.set(dados);
+        console.log("Dados:", dados)
       },
       error: (erro) => {
         console.error(erro);
       }
     });
   }
+buscarLivro(): void {
 
-  buscarLivroTitulo(): void {
-    if (!this.tituloBusca.trim()) {
-      this.carregarLivros();
-      return;
-    }
+  if (!this.textoBusca.trim()) {
+    this.carregarLivros();
+    return;
+  }
 
-    this.livroService.filtrarPorTitulo(this.tituloBusca).subscribe({
-      next: (dados) => {
+  this.livroService.buscarDadosLivro(this.textoBusca)
+    .subscribe({
+      next: dados => {
         this.livros.set(dados);
       },
-      error: (erro) => {
-        console.error(erro);
-      }
+      error: erro => console.error(erro)
     });
-  }
 
-  buscarLivroGenero(): void {
-    if (!this.generoBusca.trim()) {
-      this.carregarLivros();
-      return;
-    }
-
-    this.livroService.filtrarPorGenero(this.generoBusca).subscribe({
-      next: (dados) => {
-        this.livros.set(dados);
-      },
-      error: (erro) => {
-        console.error(erro);
-      }
-    });
-  }
-
-  toggleMatch(id: number): void {
-    const matches = new Set(this.matchIds());
-
-    if (matches.has(id)) {
-      matches.delete(id);
-    } else {
-      matches.add(id);
-    }
-
-    this.matchIds.set(matches);
-  }
+}
 
   temMatch(id: number): boolean {
     return this.matchIds().has(id);
   }
 
-  demonstrarInteresse(idLivro: number): void {
 
-    const interesse = {
-      livro: {
-        id: idLivro
-      },
-      usuarioInteressado: {
-        id: 1
-      }
-    };
+demonstrarInteresse(livro: Livro): void {
 
-  }}
+  if (this.temMatch(livro.id)) {
+
+      this.interesseService.cancelarInteresse(livro.id, 1)
+      .subscribe(() => {
+
+          const matches = new Set(this.matchIds());
+          matches.delete(livro.id);
+          this.matchIds.set(matches);
+
+      });
+
+      return;
+  }
+
+  const interesse: CriarInteresse = {
+    livro: { id: livro.id },
+    usuarioInteressado: { id: 1 }
+  };
+
+  this.interesseService.criarInteresse(interesse)
+  .subscribe(() => {
+
+      const matches = new Set(this.matchIds());
+      matches.add(livro.id);
+      this.matchIds.set(matches);
+
+  });
+
+}
+
+}
