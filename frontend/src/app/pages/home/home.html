@@ -4,7 +4,8 @@
       
       <div class="nav-left-brand">
         <div class="user-avatar-nav">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto de Perfil">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto de Perfil"  [routerLink]="['/meu-perfil']">
+          
         </div>
         <div class="logo">
           <span>LUMIERE</span>
@@ -116,66 +117,75 @@
 
   @for (livro of livros(); track livro.id) {
 
-    <div
-      class="book-card"
-      [class.match]="temMatch(livro.id)"
-      [class.inativo]="!livro.ativo">
+    <div class="cartao-livro"
+     [class.match]="temMatch(livro.id)"
+     [class.inativo]="!livro.ativo">
 
-      <div class="book-cover">
-<button
-  class="btn-match"
-  (click)="demonstrarInteresse(livro); $event.stopPropagation()">
+    <div class="capa-livro">
 
-  <i
-    class="fa-solid"
-    [class.fa-heart]="temMatch(livro.id)"
-    [class.fa-heart-crack]="!temMatch(livro.id)">
-  </i>
+        <button
+            class="botao-match"
+            (click)="demonstrarInteresse(livro); $event.stopPropagation()">
 
-  {{ temMatch(livro.id) ? 'Matched' : 'Match' }}
+            <i class="fa-solid"
+               [class.fa-heart]="temMatch(livro.id)"
+               [class.fa-heart-crack]="!temMatch(livro.id)">
+            </i>
 
-</button>
+            {{ temMatch(livro.id) ? 'Matched' : 'Match' }}
+
+        </button>
+
         <img
-          src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500"
-          [alt]="livro.titulo">
-
-      </div>
-      
-
-      <div class="user-card" [routerLink]="['/perfil', livro.usuarioId]">
-
-    <img
-        class="user-photo"
-        [src]="livro.fotoUsuario">
-
-    <span>{{ livro.nomeUsuario }}</span>
-
-</div>
-
-      <div class="book-info">
-        <h4>{{ livro.titulo }}</h4>
-        <p class="author">por {{ livro.autor }}</p>
-
-        @if (livro.generoLivro) {
-          <span class="book-genre">
-            <i class="fa-solid fa-bookmark"></i>
-            {{ livro.generoLivro }}
-          </span>
-        }
-
-        @if (livro.descricao) {
-          <p class="description">{{ livro.descricao }}</p>
-        }
-
-        @if (livro.tipoInteracao) {
-          <div class="interaction-type">
-            <i class="fa-solid fa-circle-info"></i>
-            Modalidade: {{ livro.tipoInteracao }}
-          </div>
-        }
-      </div>
+            src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500"
+            [alt]="livro.titulo">
 
     </div>
+
+    <div class="usuario-card"
+         [routerLink]="['/perfil', livro.usuarioId]">
+
+        <img
+            class="foto-usuario"
+            [src]="livro.fotoUsuario">
+
+        <span class="nome-usuario">
+            {{ livro.nomeUsuario }}
+        </span>
+
+    </div>
+
+    <div class="informacoes-livro">
+
+        <div class="titulo-livro">
+            {{ livro.titulo }}
+        </div>
+
+        <div class="autor-livro">
+            {{ livro.autor }}
+        </div>
+
+        <div class="genero-livro">
+            <i class="fa-solid fa-bookmark"></i>
+            {{ livro.generoLivro }}
+        </div>
+
+        <div class="descricao-livro">
+            {{ livro.descricaoLivro }}
+        </div>
+
+        <div class="rodape-livro">
+
+            <div class="tipo-interacao">
+                <i class="fa-solid fa-book-open"></i>
+                {{ livro.tipoInteracao }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
   } @empty {
 

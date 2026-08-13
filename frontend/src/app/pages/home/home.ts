@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { InteresseService } from '../../core/services/interesse.service'
 import {CriarInteresse} from'../../core/models/criarInteresse';
 import { HomeService } from '../../core/services/home.service';
-import { PerfilUsuario } from '../../core/models/Perfilusuario';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -16,9 +16,7 @@ import { PerfilUsuario } from '../../core/models/Perfilusuario';
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
-
   livros = signal<Livro[]>([]);
-  usuario = signal<PerfilUsuario[]>([]);
   textoBusca = '';
   matchIds = signal<Set<number>>(new Set());
   generoSelecionado = '';
@@ -36,12 +34,9 @@ export class Home implements OnInit {
   }
 
   carregarMeusInteresses(): void {
-
-    
     this.interesseService.listarInteressesEnviados(1)
       .subscribe({
         next: (interesses) => {
-
           console.log('Interesses recebidos:', interesses);
 
           const ids = interesses

@@ -44,7 +44,7 @@ export class CadastroLivro implements OnInit {
       this.novoLivro = {
         titulo: this.livro.titulo,
         autor: this.livro.autor,
-        descricao: this.livro.descricao ?? '',
+        descricao: this.livro.descricaoLivro ?? '',
         generoLivro: this.livro.generoLivro ?? '',
         tipoInteracao: this.livro.tipoInteracao ?? '',
       //  imagemUrl: this.livro.imagemUrl ?? ''

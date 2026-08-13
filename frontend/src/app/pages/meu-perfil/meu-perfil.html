@@ -1,0 +1,393 @@
+<div class="home-container">
+
+  <!-- ================= NAVBAR ================= -->
+
+  <nav class="navbar">
+    <div class="nav-content">
+
+      <div class="nav-left-brand">
+
+        <div class="user-avatar-nav">
+          <img
+            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200"
+            alt="Foto de Perfil"
+            [routerLink]="['/meu-perfil']"
+          >
+        </div>
+
+        <div class="logo">
+          <span>LUMIERE</span>
+        </div>
+
+      </div>
+
+
+      <div class="nav-links">
+
+        <a [routerLink]="['/home']">
+          Home
+        </a>
+
+        <a [routerLink]="['/meus-livros']">
+          Meus Livros
+        </a>
+
+        <a [routerLink]="['/interesses']">
+          Interesses
+        </a>
+
+        <a href="#">
+          Empréstimos
+        </a>
+
+      </div>
+
+
+      <div class="nav-actions">
+
+        <button class="btn-icon">
+          <i class="fa-regular fa-bell"></i>
+        </button>
+
+        <button class="btn-profile">
+          Entrar
+        </button>
+
+        <button class="btn-cta">
+          Cadastrar
+        </button>
+
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- ================= PERFIL ================= -->
+
+  <main class="perfil-container">
+
+    <!-- CABEÇALHO DO PERFIL -->
+
+    <section class="perfil-header">
+
+      <!-- FOTO -->
+
+      <div class="perfil-avatar">
+
+        <img
+          [src]="perfil()?.fotoUsuario || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400'"
+          alt="Foto do usuário"
+        >
+
+      </div>
+
+
+      <!-- INFORMAÇÕES -->
+
+      <div class="perfil-info">
+
+        <div class="nome-container">
+
+          <h1>
+            {{ perfil()?.nomeUsuario }}
+          </h1>
+
+          <!-- BOTÃO EDITAR -->
+
+            <button
+            class="btn-editar"
+            type="button"
+            title="Editar perfil"
+            (click)="iniciarEdicao()"
+            >
+            ✏️
+            </button>
+
+        </div>
+
+
+        <p class="descricao">
+
+          {{ perfil()?.descricaoUsuario ||
+          'Este usuário ainda não adicionou uma descrição.' }}
+
+        </p>
+
+
+        <!-- ESTATÍSTICAS -->
+
+        <div class="perfil-detalhes">
+
+          <div class="info-card">
+
+            <span class="numero">
+              {{ livros().length }}
+            </span>
+
+            <span class="titulo">
+              Livros
+            </span>
+
+          </div>
+
+
+          <div class="info-card">
+
+            <span class="numero">
+              ⭐ 4.9
+            </span>
+
+            <span class="titulo">
+              Avaliação
+            </span>
+
+          </div>
+
+
+          <div class="info-card">
+
+            <span class="numero">
+              18
+            </span>
+
+            <span class="titulo">
+              Trocas
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ================= LIVROS ================= -->
+
+    <section class="secao-livros">
+
+      <div class="titulo-secao">
+
+        <h2>
+          Livros disponíveis
+        </h2>
+
+        <span>
+          {{ livros().length }} livros
+        </span>
+
+      </div>
+
+
+      <div class="grid-livros">
+
+        @for (livro of livros(); track livro.id) {
+
+          <div class="livro-card">
+
+            <div class="capa">
+
+              <img
+                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400"
+                alt="Capa do livro"
+              >
+
+            </div>
+
+
+            <div class="conteudo">
+
+              <h3>
+                {{ livro.titulo }}
+              </h3>
+
+              <span>
+                {{ livro.autor }}
+              </span>
+
+              <p>
+                {{ livro.generoLivro }}
+              </p>
+
+              <button>
+                Ver detalhes
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+
+        <!-- CASO NÃO TENHA LIVROS -->
+
+        @if (livros().length === 0) {
+
+          <div class="sem-livros">
+
+            <div class="icone-livro">
+              <i class="fa-solid fa-book-open"></i>
+            </div>
+
+            <h3>
+              Nenhum livro disponível
+            </h3>
+
+            <p>
+              Este usuário ainda não disponibilizou nenhum livro.
+            </p>
+
+          </div>
+
+        }
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- ================= MODAL EDITAR PERFIL ================= -->
+
+  @if (editando) {
+
+    <div
+      class="modal-overlay"
+      (click)="cancelarEdicao()"
+    >
+
+      <div
+        class="modal"
+        (click)="$event.stopPropagation()"
+      >
+
+        <!-- CABEÇALHO DA MODAL -->
+
+        <div class="modal-header">
+
+          <div>
+
+            <h2>
+              Editar perfil
+            </h2>
+
+            <p>
+              Atualize suas informações
+            </p>
+
+          </div>
+
+
+          <button
+            class="btn-fechar"
+            type="button"
+            (click)="cancelarEdicao()"
+            title="Fechar"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+        </div>
+
+
+        <!-- CONTEÚDO -->
+
+        <div class="modal-body">
+
+
+          <!-- FOTO -->
+
+          <div class="foto-edicao">
+
+            <img
+              [src]="dadosEdicao.fotoUsuario || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400'"
+              alt="Foto do usuário"
+            >
+
+            <button
+              type="button"
+              class="btn-alterar-foto"
+            >
+              <i class="fa-solid fa-camera"></i>
+              Alterar foto
+            </button>
+
+          </div>
+
+
+          <!-- NOME -->
+
+          <div class="campo">
+
+            <label for="nome">
+              Nome
+            </label>
+
+            <input
+              id="nome"
+              type="text"
+              [(ngModel)]="dadosEdicao.nomeUsuario"
+              placeholder="Digite seu nome"
+            >
+
+          </div>
+
+
+          <!-- DESCRIÇÃO -->
+
+          <div class="campo">
+
+            <label for="descricao">
+              Sobre você
+            </label>
+
+            <textarea
+              id="descricao"
+              [(ngModel)]="dadosEdicao.descricaoUsuario"
+              placeholder="Conte um pouco sobre você..."
+              rows="4"
+            ></textarea>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- RODAPÉ -->
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn-cancelar"
+            (click)="cancelarEdicao()"
+          >
+            Cancelar
+          </button>
+
+
+          <button
+            type="button"
+            class="btn-salvar"
+            (click)="salvarPerfil()"
+          >
+            <i class="fa-solid fa-check"></i>
+            Salvar alterações
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

@@ -35,7 +35,7 @@
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto do usuário">
               <button class="btn-edit-avatar" title="Mudar foto"><i class="fa-solid fa-camera"></i></button>
             </div>
-            <h2 class="cinzel-title user-name">Beatriz Silva</h2>
+            <h2 class="cinzel-title user-name"> {{ meusLivros()[0]?.nomeUsuario }}</h2>
             <p class="user-location"><i class="fa-solid fa-location-dot"></i> São Paulo, SP</p>
           </div>
 
@@ -43,7 +43,7 @@
 
           <div class="profile-mini-stats">
             <div class="mini-stat">
-              <span class="value">{{ meusLivros.length }}</span>
+              <span class="value">{{ meusLivros().length }}</span>
               <span class="label">Meus Livros</span>
             </div>
             <div class="mini-stat">
@@ -74,13 +74,13 @@
 
        <div class="book-grid">
 
-  @for (livro of meusLivros; track livro.id) {
+  @for (livro of meusLivros(); track livro.id) {
 
-    <div class="book-card"
+    <div class="cartao-livro"
          [class.expandido]="cardExpandidoId === livro.id"
          (click)="toggleLivro(livro.id)">
 
-      <div class="book-cover">
+      <div class="capa-livro">
         <img
           [src]="livro.imagemUrl || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=500'"
           [alt]="livro.titulo">
@@ -105,9 +105,9 @@
 
           <div class="livro-detalhes">
 
-            <p>
+            <p class="descricao">
               <strong>Descrição:</strong>
-              {{ livro.descricao || 'Sem descrição' }}
+              {{ livro.descricaoLivro || 'Sem descrição' }}
             </p>
 
             <p>

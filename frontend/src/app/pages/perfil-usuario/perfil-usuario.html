@@ -1,1 +1,104 @@
-<p>perfil-usuario works!</p>
+<div class="home-container">
+  <nav class="navbar">
+    <div class="nav-content">
+      
+      <div class="nav-left-brand">
+        <div class="user-avatar-nav">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" alt="Foto de Perfil">
+        </div>
+        <div class="logo">
+          <span>LUMIERE</span>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a routerLink="/home">Home</a>
+        <a [routerLink]="['/meus-livros']">Meus Livros</a>
+        <a [routerLink]="['/interesses']">Interesses</a>
+        <a href="#">Empréstimos</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="perfil-container">
+
+  <!-- Cabeçalho -->
+  <div class="perfil-header">
+
+    <div class="perfil-avatar">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="Foto do usuário">
+    </div>
+
+    <div class="perfil-info">
+
+      <h1>{{ perfil()?.nomeUsuario }}</h1>
+
+      <p class="descricao">
+        {{ perfil()?.descricaoUsuario || 'Este usuário ainda não adicionou uma descrição.' }}
+      </p>
+
+      <div class="perfil-detalhes">
+
+        <div class="info-card">
+          <span class="numero">{{ livros().length }}</span>
+          <span class="titulo">Livros</span>
+        </div>
+
+        <div class="info-card">
+          <span class="numero">⭐ 4.9</span>
+          <span class="titulo">Avaliação</span>
+        </div>
+
+        <div class="info-card">
+          <span class="numero">18</span>
+          <span class="titulo">Trocas</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Livros -->
+
+  <div class="secao-livros">
+
+    <h2>Livros disponíveis</h2>
+
+    <div class="grid-livros">
+
+        @for (livro of livros(); track livro.id) {
+      <div class="livro-card">
+
+        <div class="capa">
+          <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400">
+        </div>
+
+        <div class="conteudo">
+
+          <h3>{{ livro.titulo }}</h3>
+
+          <span>{{ livro.autor }}</span>
+
+          <p>{{ livro.generoLivro }}</p>
+
+          <button>Ver detalhes</button>
+
+        </div>
+
+      </div>
+    }
+    </div>
+
+  </div>
+
+</div>
+
+  </div>

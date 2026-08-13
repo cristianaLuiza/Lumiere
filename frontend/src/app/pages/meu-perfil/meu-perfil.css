@@ -1,0 +1,849 @@
+ /* ==========================================================================
+   1. LAYOUT BASE E NAVBAR
+   ========================================================================== */
+
+.home-container {
+    background-color: #0b111e;
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    color: #ffffff;
+}
+
+.cinzel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.navbar {
+    background: rgba(11, 17, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.nav-left-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: #e5a93c;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-icon:hover {
+    color: #ffffff;
+}
+
+.btn-profile {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 8px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-cta {
+    background: #e5a93c;
+    border: none;
+    color: #0b111e;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.user-avatar-nav {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #e5a93c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(229, 169, 60, 0.2);
+}
+
+.user-avatar-nav img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* ==========================================================================
+   2. PERFIL
+   ========================================================================== */
+
+.perfil-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+
+/* Header */
+
+.perfil-header {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+
+    background: white;
+    border-radius: 25px;
+    padding: 35px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+
+    margin-bottom: 50px;
+}
+
+
+/* Avatar */
+
+.perfil-avatar {
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+}
+
+.perfil-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 6px solid #ffffff;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+}
+
+
+/* Informações */
+
+.perfil-info {
+    flex: 1;
+}
+
+
+/* Nome + lápis */
+
+.nome-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.perfil-info h1 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin: 0 0 15px 0;
+}
+
+
+/* Botão lápis */
+
+.btn-editar {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #f1f5f9;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    transition: .3s;
+}
+
+.btn-editar:hover {
+    background: #e2e8f0;
+
+    transform: translateY(-2px);
+}
+
+
+/* Descrição */
+
+.descricao {
+    color: #6b7280;
+
+    line-height: 1.7;
+
+    max-width: 700px;
+
+    margin-bottom: 30px;
+}
+
+
+/* ==========================================================================
+   3. ESTATÍSTICAS
+   ========================================================================== */
+
+.perfil-detalhes {
+    display: flex;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.info-card {
+    background: #f8fafc;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    min-width: 130px;
+
+    text-align: center;
+
+    transition: .3s;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+}
+
+.numero {
+    display: block;
+
+    font-size: 1.5rem;
+
+    font-weight: bold;
+
+    color: #6366f1;
+}
+
+.titulo {
+    color: #64748b;
+
+    font-size: .9rem;
+}
+
+
+/* ==========================================================================
+   4. LIVROS
+   ========================================================================== */
+
+.secao-livros h2 {
+    font-size: 1.6rem;
+
+    margin-bottom: 25px;
+
+    color: #ffffff;
+}
+
+.titulo-secao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.titulo-secao h2 {
+    margin-bottom: 0;
+}
+
+.titulo-secao span {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.grid-livros {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+    gap: 30px;
+}
+
+.livro-card {
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+
+    transition: .3s;
+}
+
+.livro-card:hover {
+    transform: translateY(-8px);
+}
+
+.capa {
+    height: 240px;
+}
+
+.capa img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.conteudo {
+    padding: 20px;
+}
+
+.conteudo h3 {
+    margin-bottom: 8px;
+
+    color: #1f2937;
+}
+
+.conteudo span {
+    color: #6b7280;
+}
+
+.conteudo p {
+    color: #6366f1;
+
+    margin: 15px 0;
+}
+
+.conteudo button {
+    width: 100%;
+
+    border: none;
+
+    background: #6366f1;
+
+    color: white;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.conteudo button:hover {
+    background: #4f46e5;
+}
+
+
+/* ==========================================================================
+   5. MODAL DE EDITAR PERFIL
+   ========================================================================== */
+
+.modal-overlay {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: rgba(5, 10, 20, 0.75);
+
+    backdrop-filter: blur(5px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2000;
+
+    padding: 20px;
+}
+
+
+/* Caixa da modal */
+
+.modal {
+    width: 100%;
+    max-width: 520px;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+
+    overflow: hidden;
+
+    animation: aparecerModal .2s ease;
+}
+
+
+/* Animação */
+
+@keyframes aparecerModal {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* ==========================================================================
+   6. CABEÇALHO DA MODAL
+   ========================================================================== */
+
+.modal-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px 30px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+    margin: 0 0 5px;
+
+    color: #1f2937;
+
+    font-size: 1.4rem;
+}
+
+.modal-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* Botão X */
+
+.btn-fechar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: .2s;
+}
+
+.btn-fechar:hover {
+    background: #fee2e2;
+
+    color: #ef4444;
+}
+
+
+/* ==========================================================================
+   7. CORPO DA MODAL
+   ========================================================================== */
+
+.modal-body {
+    padding: 30px;
+}
+
+
+/* Foto */
+
+.foto-edicao {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 25px;
+}
+
+.foto-edicao img {
+    width: 75px;
+    height: 75px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 4px solid #f1f5f9;
+}
+
+.btn-alterar-foto {
+    border: 1px solid #d1d5db;
+
+    background: white;
+
+    color: #6366f1;
+
+    padding: 9px 14px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    transition: .2s;
+}
+
+.btn-alterar-foto:hover {
+    background: #f8fafc;
+
+    border-color: #6366f1;
+}
+
+
+/* Campos */
+
+.campo {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+}
+
+.campo label {
+    color: #374151;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.campo input,
+.campo textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 10px;
+
+    color: #1f2937;
+
+    background: #ffffff;
+
+    font-family: 'Open Sans', sans-serif;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: .2s;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+    border-color: #6366f1;
+
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+}
+
+.campo textarea {
+    resize: vertical;
+
+    min-height: 110px;
+}
+
+
+/* ==========================================================================
+   8. RODAPÉ DA MODAL
+   ========================================================================== */
+
+.modal-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding: 20px 30px;
+
+    background: #f8fafc;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* Cancelar */
+
+.btn-cancelar {
+    padding: 10px 18px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #475569;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .2s;
+}
+
+.btn-cancelar:hover {
+    background: #f1f5f9;
+}
+
+
+/* Salvar */
+
+.btn-salvar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #6366f1;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.btn-salvar:hover {
+    background: #4f46e5;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   9. SEM LIVROS
+   ========================================================================== */
+
+.sem-livros {
+    grid-column: 1 / -1;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+}
+
+.icone-livro {
+    font-size: 40px;
+
+    color: #6366f1;
+
+    margin-bottom: 15px;
+}
+
+.sem-livros h3 {
+    margin-bottom: 8px;
+
+    color: #1f2937;
+}
+
+.sem-livros p {
+    margin: 0;
+
+    color: #6b7280;
+}
+
+
+/* ==========================================================================
+   10. RESPONSIVIDADE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .perfil-header {
+        gap: 25px;
+    }
+
+    .grid-livros {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .perfil-header {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .nome-container {
+        justify-content: center;
+    }
+
+    .descricao {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .perfil-detalhes {
+        justify-content: center;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .nav-actions .btn-profile,
+    .nav-actions .btn-cta {
+        display: none;
+    }
+
+    .perfil-container {
+        padding: 25px 15px;
+    }
+
+    .perfil-header {
+        padding: 25px 20px;
+    }
+
+    .perfil-avatar {
+        width: 140px;
+        height: 140px;
+    }
+
+    .grid-livros {
+        grid-template-columns: 1fr;
+    }
+
+    .modal {
+        max-height: 90vh;
+
+        overflow-y: auto;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+
+    .btn-cancelar,
+    .btn-salvar {
+        width: 100%;
+        justify-content: center;
+    }
+
+}

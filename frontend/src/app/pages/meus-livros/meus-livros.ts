@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LivroService } from '../../core/services/livro.service';
@@ -13,7 +13,7 @@ import { CadastroLivro } from '../meus-livros/cadastro-livro/cadastro-livro';
   styleUrl: './meus-livros.css',
 })
 export class MeusLivros implements OnInit{
-meusLivros: Livro[] = [];
+meusLivros = signal<Livro[]>([]);
 modalAberta = false;
 cardExpandidoId: number | null= null;
 livroSelecionado?: Livro;
@@ -35,7 +35,8 @@ constructor(
 
     this.livroService.listarLivroId(idDoUsuarioLogado).subscribe({
       next: (dados) => {
-        this.meusLivros = dados;
+        this.meusLivros.set(dados);
+        console.log("NOME:", dados)
         this.cdr.detectChanges();
       },
       error: (erro) => {
