@@ -27,8 +27,9 @@ public class Livro {
 
     private String titulo;
     private String autor;
-    private String descricao;
+    private String descricaoLivro;
     private Boolean disponivel = true;
+
 
     // Boa prática: iniciar como true para novos livros cadastrados
     private boolean ativo = true;
@@ -44,4 +45,5 @@ public class Livro {
     @JoinColumn(name = "usuario_id")
     @JsonIgnore
     private Usuario usuario;
+
 }

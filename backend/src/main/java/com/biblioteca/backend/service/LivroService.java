@@ -106,7 +106,7 @@ public class LivroService {
 
         livroExistente.setTitulo(livroAtualizado.getTitulo());
         livroExistente.setAutor(livroAtualizado.getAutor());
-        livroExistente.setDescricao(livroAtualizado.getDescricao());
+        livroExistente.setDescricaoLivro(livroAtualizado.getDescricaoLivro());
         livroExistente.setGeneroLivro(livroAtualizado.getGeneroLivro());
         livroExistente.setTipoInteracao(livroAtualizado.getTipoInteracao());
 

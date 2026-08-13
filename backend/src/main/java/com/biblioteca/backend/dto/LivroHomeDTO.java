@@ -3,12 +3,14 @@ package com.biblioteca.backend.dto;
 import com.biblioteca.backend.enums.GeneroLivro;
 import com.biblioteca.backend.enums.TipoInteracao;
 
+
+
 public record LivroHomeDTO(
 
         Long id,
         String titulo,
         String autor,
-        String descricao,
+        String descricaoLivro,
         Boolean disponivel,
         Boolean ativo,
         TipoInteracao tipoInteracao,
@@ -16,6 +18,7 @@ public record LivroHomeDTO(
 
         Long usuarioId,
         String nomeUsuario,
-        String fotoUsuario
+        String fotoUsuario,
+        String descricaoUsuario
 
 ) {}

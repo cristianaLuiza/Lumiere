@@ -23,14 +23,15 @@ public class HomeService {
                         livro.getId(),
                         livro.getTitulo(),
                         livro.getAutor(),
-                        livro.getDescricao(),
+                        livro.getDescricaoLivro(),
                         livro.getDisponivel(),
                         livro.isAtivo(),
                         livro.getTipoInteracao(),
                         livro.getGeneroLivro(),
                         livro.getUsuario().getId(),
                         livro.getUsuario().getNomeUsuario(),
-                        livro.getUsuario().getFotoUsuario()
+                        livro.getUsuario().getFotoUsuario(),
+                        livro.getUsuario().getDescricaoUsuario()
                 ))
                 .toList();
     }

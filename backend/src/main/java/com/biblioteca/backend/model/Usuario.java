@@ -17,5 +17,6 @@ public class Usuario {
     private String senha;
     private String nomeUsuario;
     private String fotoUsuario;
+    private String descricaoUsuario;
 
 }
