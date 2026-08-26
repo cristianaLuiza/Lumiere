@@ -16,7 +16,11 @@ public class Usuario {
     private String username;
     private String senha;
     private String nomeUsuario;
-    private String fotoUsuario;
+
+    @Lob
+    @Column(name = "foto_usuario")
+    private byte[] fotoUsuario;
+
     private String descricaoUsuario;
 
 }

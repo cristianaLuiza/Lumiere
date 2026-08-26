@@ -30,7 +30,7 @@ public class HomeService {
                         livro.getGeneroLivro(),
                         livro.getUsuario().getId(),
                         livro.getUsuario().getNomeUsuario(),
-                        livro.getUsuario().getFotoUsuario(),
+                        "http://localhost:8081/usuarios/" + livro.getUsuario().getId() + "/foto",
                         livro.getUsuario().getDescricaoUsuario()
                 ))
                 .toList();

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,15 +81,17 @@ public class LivroService {
 
         try {
 
-            GeneroLivro genero = GeneroLivro.valueOf(texto.toUpperCase());
+            GeneroLivro genero = Arrays.stream(GeneroLivro.values())
+                    .filter(g -> g.name().equalsIgnoreCase(texto))
+                    .findFirst()
+                    .orElseThrow();
 
             livroRepository.findByGeneroLivro(genero)
                     .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
 
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             // não era um gênero válido
         }
-
     }
     private void adicionarSeNaoExiste(List<Livro> resultado, Livro livro) {
 
