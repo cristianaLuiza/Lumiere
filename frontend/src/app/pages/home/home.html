@@ -41,7 +41,7 @@
     type="text"
     placeholder="Qual livro você está procurando hoje?"
     [(ngModel)]="textoBusca"
-    (input)="buscarLivro()">
+    (input)="buscarLivroTexto()">
         </div>
       </div>
 
@@ -83,12 +83,12 @@
     type="text"
     placeholder="Ex: George Orwell"
     [(ngModel)]="textoBusca"
-    (input)="buscarLivro()">
+    (input)="buscarLivroTexto()">
           </div>
 
           <div class="filter-group">
             <label>Categoria</label>
-            <select [(ngModel)]="buscarLivro" (change)="buscarLivro()">
+            <select [(ngModel)]="generoSelecionado" (change)="buscarLivroGenero()">
               <option value="">Todos os gêneros</option>
               <option value="Romance">Romance</option>
               <option value="Fantasia">Fantasia</option>
@@ -98,7 +98,7 @@
               <option value="Policial">Policial</option>
               <option value="Terror">Terror</option>
               <option value="Historica">Histórica</option>
-            </select>
+          </select>
           </div>
 
           <div class="filter-group">

@@ -129,4 +129,28 @@ import { UsuarioService } from '../../core/services/usuario.service';
 
       });
   }
+
+  selecionarFoto(event: any): void {
+
+  const arquivo = event.target.files[0];
+
+  if (!arquivo) {
+    return;
+  }
+
+  this.usuarioService.atualizarFoto(this.usuarioId, arquivo)
+    .subscribe({
+
+      next: () => {
+        console.log('Foto atualizada!');
+
+        this.dadosPerfil();
+      },
+
+      error: (erro) => {
+        console.error('Erro ao atualizar foto:', erro);
+      }
+
+    });
+}
 }

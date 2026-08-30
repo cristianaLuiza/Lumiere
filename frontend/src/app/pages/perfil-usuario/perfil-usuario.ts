@@ -14,42 +14,60 @@ import { HomeService } from '../../core/services/home.service';
   styleUrl: './perfil-usuario.css',
 })
 export class PerfilUsuario implements OnInit {
+
   livros = signal<Livro[]>([]);
   perfil = signal<DadosUsuario | null>(null);
 
   constructor(
-  private homeService: HomeService,
-  private usuarioService: UsuarioService
+    private homeService: HomeService,
+    private usuarioService: UsuarioService,
+    private route: ActivatedRoute
+  ) {}
 
-) {}
+  ngOnInit(): void {
 
-ngOnInit():void {
-this.dadosPerfil();
-this.carregarLivroDoPerfil();
-}
+    this.route.paramMap.subscribe(params => {
 
-dadosPerfil(): void {
-  const usuarioId = 3;
-  this.usuarioService.buscarDadosUsuario(usuarioId).subscribe({
+      const usuarioId = Number(params.get('id'));
 
-    next: (usuario) => {
-      console.log("USUARIO", usuario);
-      this.perfil.set(usuario);
-    },
+      this.dadosPerfil(usuarioId);
+      this.carregarLivroDoPerfil(usuarioId);
 
-    error: (erro) => {
-      console.error(erro);
-    }
+    });
 
-  });
-}
-
-carregarLivroDoPerfil():void{
-const usuarioId = 2;
-this.homeService.listarTodos(usuarioId).subscribe({
-  next:(dados) => {
-    this.livros.set(dados);
   }
-})
-}
+
+  dadosPerfil(usuarioId: number): void {
+
+    this.usuarioService.buscarDadosUsuario(usuarioId).subscribe({
+
+      next: (usuario) => {
+        console.log("USUARIO", usuario);
+        this.perfil.set(usuario);
+      },
+
+      error: (erro) => {
+        console.error(erro);
+      }
+
+    });
+
+  }
+
+  carregarLivroDoPerfil(usuarioId: number): void {
+
+    this.homeService.listarTodos(usuarioId).subscribe({
+
+      next: (dados) => {
+        this.livros.set(dados);
+      },
+
+      error: (erro) => {
+        console.error(erro);
+      }
+
+    });
+
+  }
+
 }

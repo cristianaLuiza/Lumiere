@@ -19,7 +19,7 @@ export class Home implements OnInit {
   livros = signal<Livro[]>([]);
   textoBusca = '';
   matchIds = signal<Set<number>>(new Set());
-  generoSelecionado = '';
+  generoSelecionado: string = '';
 
   constructor(
     private livroService: LivroService,
@@ -63,21 +63,36 @@ export class Home implements OnInit {
       }
     });
   }
-buscarLivro(): void {
 
-  if (!this.textoBusca.trim()) {
+buscarLivroTexto():void{
+  if(!this.textoBusca.trim()){
+    this.carregarLivros();
+    return;
+  }
+  this.livroService.buscarDadosLivro(this.textoBusca).subscribe({
+    next:(dados) =>{
+      this.livros.set(dados);
+    },
+    error:(erro)=> {
+      console.error('Erro ao buscar livro:', erro);
+    }
+  })
+}
+
+buscarLivroGenero(): void {
+
+  if (!this.generoSelecionado.trim()) {
     this.carregarLivros();
     return;
   }
 
-  this.livroService.buscarDadosLivro(this.textoBusca)
+  this.livroService.buscarDadosLivro(this.generoSelecionado)
     .subscribe({
       next: dados => {
         this.livros.set(dados);
       },
       error: erro => console.error(erro)
     });
-
 }
 
   temMatch(id: number): boolean {

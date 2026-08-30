@@ -75,12 +75,24 @@
 
       <div class="perfil-avatar">
 
-        <img
-          [src]="perfil()?.fotoUsuario || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400'"
-          alt="Foto do usuário"
-        >
+  <img
+    [src]="perfil()?.fotoUsuario || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400'"
+    alt="Foto do usuário"
+  >
 
-      </div>
+  <label class="botao-editar-foto" title="Alterar foto">
+    ✏️
+
+    <input
+      type="file"
+      accept="image/*"
+      (change)="selecionarFoto($event)"
+      hidden
+    >
+
+  </label>
+
+</div>
 
 
       <!-- INFORMAÇÕES -->
@@ -310,13 +322,19 @@
               alt="Foto do usuário"
             >
 
-            <button
-              type="button"
-              class="btn-alterar-foto"
-            >
-              <i class="fa-solid fa-camera"></i>
-              Alterar foto
-            </button>
+           <label class="btn-alterar-foto">
+
+  <i class="fa-solid fa-camera"></i>
+  Alterar foto
+
+  <input
+    type="file"
+    accept="image/*"
+    (change)="selecionarFoto($event)"
+    hidden
+  >
+
+</label>
 
           </div>
 

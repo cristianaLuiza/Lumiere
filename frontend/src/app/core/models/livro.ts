@@ -5,7 +5,7 @@ export interface Livro {
     imagemUrl: any;
     titulo: string;
     autor: string;
-    descricao: string;
+    descricaoLivro: string;
     disponivel: boolean;
     ativo: boolean;
     tipoInteracao: string;
@@ -14,4 +14,5 @@ export interface Livro {
     usuarioId: number;
     nomeUsuario: string;
     fotoUsuario: string;
+    descricaoUsuario: string;
 }
