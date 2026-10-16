@@ -17,20 +17,10 @@ public class CadastroService {
 
     public UsuarioDTO criarCadastro( CadastroDto dto){
 
-        if(dto.getSenha() == null || dto.getSenha().length()<3){
-            throw new RuntimeException("A senha deve conter no minimo 3 digitos");
-        }
-        if(userRepository.existsByUsername(dto.getUsername())){
-             throw new RuntimeException("Esse nome de usuário já existe");
-        }
+        Long id = userRepository.cadastrarUsuario(dto.getUsername(), dto.getSenha(), dto.getNomeUsuario());
 
-        Usuario usuario = new Usuario();
-
-        usuario.setUsername(dto.getUsername());
-        usuario.setSenha(dto.getSenha());
-        usuario.setNomeUsuario(dto.getNomeUsuario());
-
-         Usuario usuarioSalvo = userRepository.save(usuario);
+        Usuario usuarioSalvo = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
 
          
     return new UsuarioDTO(

@@ -1,5 +1,6 @@
 package com.biblioteca.backend.controller;
 
+import com.biblioteca.backend.dto.EstatisticasUsuarioDTO;
 import com.biblioteca.backend.dto.UsuarioDTO;
 import com.biblioteca.backend.model.Usuario;
 import com.biblioteca.backend.service.UserService;
@@ -23,6 +24,11 @@ public class UserController {
     @GetMapping("/{usuarioId}")
     public UsuarioDTO buscarUsuario(@PathVariable Long usuarioId) {
         return userService.dadosUsuario(usuarioId);
+    }
+
+    @GetMapping("/{usuarioId}/estatisticas")
+    public EstatisticasUsuarioDTO buscarEstatisticas(@PathVariable Long usuarioId) {
+        return userService.estatisticas(usuarioId);
     }
 
     @PutMapping("/{id}")

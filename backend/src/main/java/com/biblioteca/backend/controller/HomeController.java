@@ -21,4 +21,9 @@ public class HomeController {
     public List<LivroHomeDTO> listarLivros(@PathVariable Long usuarioId) {
         return homeService.listarLivros(usuarioId);
     }
+
+    @GetMapping("/{usuarioId}/recomendados")
+    public List<LivroHomeDTO> listarRecomendados(@PathVariable Long usuarioId) {
+        return homeService.listarRecomendados(usuarioId);
+    }
 }

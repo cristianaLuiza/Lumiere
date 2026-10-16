@@ -51,18 +51,9 @@ public class InteresseService {
 
     public Interesse aceitarInteresse(Long interesseId) {
 
-        Interesse interesse = buscarInteressePorId(interesseId);
+        interesseRepository.aceitarInteresse(interesseId);
 
-        interesse.setStatus(StatusInteresse.ACEITO);
-
-        Livro livro = interesse.getLivro();
-        livro.setDisponivel(false);
-
-        livroRepository.save(livro);
-
-        // TODO: Criar chat entre os usuários
-
-        return interesseRepository.save(interesse);
+        return buscarInteressePorId(interesseId);
     }
 
 
@@ -86,14 +77,14 @@ public class InteresseService {
 
     public List<Interesse> listarInteressesEnviados(Long usuarioId) {
         buscarUsuarioPorId(usuarioId);
-        return interesseRepository.findByUsuarioInteressadoId(usuarioId);
+        return interesseRepository.listarEnviados(usuarioId);
     }
 
     public List<Interesse> listarInteressesRecebidos(Long usuarioId) {
 
         buscarUsuarioPorId(usuarioId);
 
-        return interesseRepository.findByLivroUsuarioId(usuarioId);
+        return interesseRepository.listarRecebidos(usuarioId);
     }
 
     public void cancelarInteresse(Long livroId, Long usuarioId){

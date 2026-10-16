@@ -1,9 +1,11 @@
 package com.biblioteca.backend.service;
 
+import com.biblioteca.backend.dto.EstatisticasUsuarioDTO;
 import com.biblioteca.backend.dto.UsuarioDTO;
 import com.biblioteca.backend.model.Usuario;
 import com.biblioteca.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +22,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     public Usuario salvar(Usuario usuario) {
         return userRepository.save(usuario);
+    }
+
+    public EstatisticasUsuarioDTO estatisticas(Long usuarioId) {
+        return jdbcTemplate.query(
+                """
+                SELECT v.*, dbo.fn_qtd_interesses_pendentes(v.usuario_id) AS interesses_pendentes
+                FROM dbo.vw_estatisticas_usuario v
+                WHERE v.usuario_id = ?
+                """,
+                (rs, i) -> new EstatisticasUsuarioDTO(
+                        rs.getLong("usuario_id"),
+                        rs.getString("nome_usuario"),
+                        rs.getInt("livros_cadastrados"),
+                        rs.getInt("livros_disponiveis"),
+                        rs.getInt("livros_negociados"),
+                        rs.getInt("interesses_enviados"),
+                        rs.getInt("interesses_recebidos"),
+                        rs.getInt("interesses_aceitos"),
+                        rs.getInt("interesses_pendentes")
+                ),
+                usuarioId
+        ).stream().findFirst().orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
     }
 
     public UsuarioDTO dadosUsuario(Long usuarioId) {

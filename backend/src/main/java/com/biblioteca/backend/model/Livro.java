@@ -8,13 +8,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "livros")
-@SQLDelete(sql = "UPDATE livros SET ativo = false WHERE id = ?")
-@SQLRestriction("ativo = true")
+@SQLRestriction("ativo = 1")
 @Getter // Substitui o @Data de forma segura para Getters
 @Setter // Substitui o @Data de forma segura para Setters
 @NoArgsConstructor  // Construtor padrão exigido pelo JPA

@@ -1,6 +1,5 @@
 package com.biblioteca.backend.service;
 
-import com.biblioteca.backend.enums.GeneroLivro;
 import com.biblioteca.backend.model.Livro;
 import com.biblioteca.backend.model.Usuario;
 import com.biblioteca.backend.repository.LivroRepository;
@@ -8,8 +7,6 @@ import com.biblioteca.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,52 +52,7 @@ public class LivroService {
             return livroRepository.findAll();
         }
 
-        List<Livro> resultado = new ArrayList<>();
-
-        adicionarTitulos(resultado, texto);
-        adicionarAutores(resultado, texto);
-        adicionarGeneros(resultado, texto);
-
-        return resultado;
-    }
-    private void adicionarTitulos(List<Livro> resultado, String texto) {
-
-        livroRepository.findByTituloContainingIgnoreCase(texto)
-                .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
-
-    }
-
-    private void adicionarAutores(List<Livro> resultado, String texto) {
-
-        livroRepository.findByAutorContainingIgnoreCase(texto)
-                .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
-
-    }
-
-    private void adicionarGeneros(List<Livro> resultado, String texto) {
-
-        try {
-
-            GeneroLivro genero = Arrays.stream(GeneroLivro.values())
-                    .filter(g -> g.name().equalsIgnoreCase(texto))
-                    .findFirst()
-                    .orElseThrow();
-
-            livroRepository.findByGeneroLivro(genero)
-                    .forEach(livro -> adicionarSeNaoExiste(resultado, livro));
-
-        } catch (Exception e) {
-            // não era um gênero válido
-        }
-    }
-    private void adicionarSeNaoExiste(List<Livro> resultado, Livro livro) {
-
-        boolean existe = resultado.stream()
-                .anyMatch(l -> l.getId().equals(livro.getId()));
-
-        if (!existe) {
-            resultado.add(livro);
-        }
+        return livroRepository.buscarPorTexto(texto.trim());
     }
 
     public Livro atualizarLivro(long id, Livro livroAtualizado){
@@ -120,10 +72,7 @@ public class LivroService {
 
 
     public String excluirLivro(Long id) {
-       if(!livroRepository.existsById(id)){
-           throw new RuntimeException("O livro com o ID:" + id + " não foi encontrado");
-       }
-       livroRepository.deleteById(id);
+       livroRepository.excluirLivro(id);
        return "Livro excluido com sucesso!";
     }
 
