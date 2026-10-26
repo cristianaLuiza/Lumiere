@@ -22,6 +22,14 @@ public interface InteresseRepository extends JpaRepository<Interesse, Long> {
     long countByStatus(StatusInteresse status);
 
     @Query(value = """
+            SELECT COUNT(*)
+            FROM dbo.interesse i
+            JOIN dbo.livros l ON l.id = i.livro_id
+            WHERE i.status = 'ACEITO' AND l.tipo_interacao = 'TROCA'
+            """, nativeQuery = true)
+    long contarTrocasConcluidas();
+
+    @Query(value = """
             SELECT i.*
             FROM dbo.interesse i
             JOIN dbo.vw_interesses_detalhados v ON v.interesse_id = i.id

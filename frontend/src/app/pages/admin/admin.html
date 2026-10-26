@@ -141,6 +141,45 @@
             </span>
           </div>
         </div>
+
+        <div class="stat-card" (click)="trocarAba('usuarios')">
+          <div class="stat-card-header">
+            <span class="stat-label">Novos Usuários</span>
+            <div class="stat-icon-wrapper blue">
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+          </div>
+          <div class="stat-value">{{ estatisticas().novosUsuarios }}</div>
+          <div class="stat-card-footer">
+            <span class="stat-detail">Cadastrados nos últimos 7 dias</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-label">Logins em 24 h</span>
+            <div class="stat-icon-wrapper gold">
+              <i class="fa-solid fa-right-to-bracket"></i>
+            </div>
+          </div>
+          <div class="stat-value">{{ estatisticas().logins24h }}</div>
+          <div class="stat-card-footer">
+            <span class="stat-detail">Acessos registrados no login</span>
+          </div>
+        </div>
+
+        <div class="stat-card" (click)="trocarAba('relatorios')">
+          <div class="stat-card-header">
+            <span class="stat-label">Trocas Concluídas</span>
+            <div class="stat-icon-wrapper green">
+              <i class="fa-solid fa-right-left"></i>
+            </div>
+          </div>
+          <div class="stat-value">{{ estatisticas().trocasConcluidas }}</div>
+          <div class="stat-card-footer">
+            <span class="stat-detail">Interesses de troca aceitos</span>
+          </div>
+        </div>
       </section>
 
       <!-- Abas de Navegação -->
@@ -357,6 +396,10 @@
               <button class="btn-clear-filters" (click)="limparFiltrosLivros()" title="Limpar Filtros">
                 <i class="fa-solid fa-filter-circle-xmark"></i> Limpar
               </button>
+
+              <button class="btn-sm-gold btn-create" (click)="abrirNovoLivro()">
+                <i class="fa-solid fa-plus"></i> Novo livro
+              </button>
             </div>
           </div>
 
@@ -421,13 +464,40 @@
                       >
                         <i class="fa-regular fa-eye"></i>
                       </button>
-                      <button
-                        class="btn-icon-action btn-delete"
-                        (click)="abrirModalExcluirLivro(livro)"
-                        title="Excluir livro permanentemente"
-                      >
-                        <i class="fa-regular fa-trash-can"></i>
-                      </button>
+                      @if (!livro.ativo) {
+                        <button
+                          class="btn-icon-action btn-view"
+                          (click)="alterarLivro(livro, 'restaurar')"
+                          title="Restaurar livro removido"
+                        >
+                          <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                      } @else {
+                        @if (livro.disponivel) {
+                          <button
+                            class="btn-icon-action btn-view"
+                            (click)="alterarLivro(livro, 'suspender')"
+                            title="Suspender livro"
+                          >
+                            <i class="fa-regular fa-circle-pause"></i>
+                          </button>
+                        } @else {
+                          <button
+                            class="btn-icon-action btn-view"
+                            (click)="alterarLivro(livro, 'reativar')"
+                            title="Reativar livro suspenso"
+                          >
+                            <i class="fa-regular fa-circle-play"></i>
+                          </button>
+                        }
+                        <button
+                          class="btn-icon-action btn-delete"
+                          (click)="abrirModalExcluirLivro(livro)"
+                          title="Remover livro do catálogo"
+                        >
+                          <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                      }
                     </td>
                   </tr>
                 }
@@ -477,6 +547,10 @@
               <button class="btn-clear-filters" (click)="limparFiltrosUsuarios()" title="Limpar Filtros">
                 <i class="fa-solid fa-filter-circle-xmark"></i> Limpar
               </button>
+
+              <button class="btn-sm-gold btn-create" (click)="abrirPessoa()">
+                <i class="fa-solid fa-user-plus"></i> Nova pessoa
+              </button>
             </div>
           </div>
 
@@ -515,6 +589,9 @@
                   <div class="user-card-actions">
                     <button class="btn-user-action" (click)="abrirDetalhesUsuario(usuario)">
                       <i class="fa-regular fa-eye"></i> Detalhes
+                    </button>
+                    <button class="btn-user-action" (click)="abrirPessoa(usuario)">
+                      <i class="fa-regular fa-pen-to-square"></i> Editar
                     </button>
                     <a class="btn-user-action btn-profile-link" [routerLink]="['/perfil', usuario.id]">
                       <i class="fa-solid fa-arrow-up-right-from-square"></i> Perfil
@@ -690,7 +767,7 @@
             class="btn-modal-danger"
             (click)="fecharDetalhesLivro(); abrirModalExcluirLivro(livroDetalhes()!)"
           >
-            <i class="fa-regular fa-trash-can"></i> Excluir Livro
+            <i class="fa-regular fa-trash-can"></i> Remover Livro
           </button>
         </div>
       </div>
@@ -761,7 +838,7 @@
     <div class="modal-backdrop" (click)="cancelarExclusaoLivro()">
       <div class="modal-box modal-box-danger" (click)="$event.stopPropagation()">
         <div class="modal-header">
-          <h3 class="text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Confirmar Exclusão</h3>
+          <h3 class="text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Confirmar Remoção</h3>
           <button class="modal-close-btn" (click)="cancelarExclusaoLivro()">&times;</button>
         </div>
 
@@ -771,7 +848,7 @@
           </p>
           <div class="alert-box-danger-inline">
             <i class="fa-solid fa-circle-info"></i>
-            Esta ação é irreversível e o livro será removido permanentemente de todo o catálogo da comunidade.
+            O livro sai do catálogo da comunidade e os interesses pendentes são recusados. Ele pode ser restaurado depois.
           </div>
         </div>
 
@@ -781,13 +858,143 @@
           </button>
           <button class="btn-modal-danger" (click)="confirmarExclusaoLivro()" [disabled]="excluindo()">
             @if (excluindo()) {
-              <i class="fa-solid fa-circle-notch fa-spin"></i> Excluindo...
+              <i class="fa-solid fa-circle-notch fa-spin"></i> Removendo...
             } @else {
-              <i class="fa-regular fa-trash-can"></i> Confirmar Exclusão
+              <i class="fa-regular fa-trash-can"></i> Confirmar Remoção
             }
           </button>
         </div>
       </div>
+    </div>
+  }
+
+  @if (pessoaEmEdicao(); as pessoa) {
+    <div class="modal-backdrop" (click)="pessoaEmEdicao.set(null)">
+      <form class="modal-box" (click)="$event.stopPropagation()" (ngSubmit)="salvarPessoa()">
+        <div class="modal-header">
+          <h3>
+            <i class="fa-solid fa-user-pen"></i>
+            {{ pessoa === 'nova' ? 'Nova pessoa' : 'Editar ' + pessoa.nomeUsuario }}
+          </h3>
+          <button type="button" class="modal-close-btn" (click)="pessoaEmEdicao.set(null)">&times;</button>
+        </div>
+
+        <nav class="tabs-nav modal-tabs">
+          <button type="button" class="tab-btn" [class.active]="abaPessoa() === 'perfil'" (click)="abaPessoa.set('perfil')">
+            Perfil
+          </button>
+          <button type="button" class="tab-btn" [class.active]="abaPessoa() === 'acesso'" (click)="abaPessoa.set('acesso')">
+            Acesso
+          </button>
+        </nav>
+
+        <div class="modal-body form-grid">
+          @if (abaPessoa() === 'perfil') {
+            <label>
+              Nome
+              <input name="nomeUsuario" [(ngModel)]="formPessoa.nomeUsuario" required>
+            </label>
+            <label>
+              Descrição
+              <textarea name="descricaoUsuario" rows="4" [(ngModel)]="formPessoa.descricaoUsuario"></textarea>
+            </label>
+          } @else {
+            <label>
+              Nome de usuário
+              <input name="username" [(ngModel)]="formPessoa.username" required>
+            </label>
+            <label>
+              Senha
+              <input
+                name="senha"
+                type="password"
+                [(ngModel)]="formPessoa.senha"
+                [placeholder]="pessoa === 'nova' ? 'Mínimo de 3 caracteres' : 'Deixe em branco para manter'"
+              >
+            </label>
+            <label>
+              Tipo de usuário
+              <select name="tipoUsuario" [(ngModel)]="formPessoa.tipoUsuario">
+                <option value="COMUM">Comum</option>
+                <option value="ADMIN">Administrador</option>
+              </select>
+            </label>
+          }
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-modal-secondary" (click)="pessoaEmEdicao.set(null)">Cancelar</button>
+          <button type="submit" class="btn-modal-primary" [disabled]="salvando()">Salvar</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  @if (livroEmCriacao()) {
+    <div class="modal-backdrop" (click)="livroEmCriacao.set(false)">
+      <form class="modal-box" (click)="$event.stopPropagation()" (ngSubmit)="salvarLivro()">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-book-medical"></i> Novo livro</h3>
+          <button type="button" class="modal-close-btn" (click)="livroEmCriacao.set(false)">&times;</button>
+        </div>
+
+        <nav class="tabs-nav modal-tabs">
+          <button type="button" class="tab-btn" [class.active]="abaLivro() === 'obra'" (click)="abaLivro.set('obra')">
+            Obra
+          </button>
+          <button type="button" class="tab-btn" [class.active]="abaLivro() === 'classificacao'" (click)="abaLivro.set('classificacao')">
+            Classificação
+          </button>
+        </nav>
+
+        <div class="modal-body form-grid">
+          @if (abaLivro() === 'obra') {
+            <label>
+              Título
+              <input name="titulo" [(ngModel)]="formLivro.titulo" required>
+            </label>
+            <label>
+              Autor
+              <input name="autor" [(ngModel)]="formLivro.autor" required>
+            </label>
+            <label>
+              Descrição
+              <textarea name="descricaoLivro" rows="4" [(ngModel)]="formLivro.descricaoLivro"></textarea>
+            </label>
+          } @else {
+            <label>
+              Gênero
+              <select name="generoLivro" [(ngModel)]="formLivro.generoLivro">
+                <option value="" disabled>Selecione</option>
+                @for (genero of generos; track genero) {
+                  <option [value]="genero">{{ genero }}</option>
+                }
+              </select>
+            </label>
+            <label>
+              Modalidade
+              <select name="tipoInteracao" [(ngModel)]="formLivro.tipoInteracao">
+                @for (modalidade of modalidades; track modalidade) {
+                  <option [value]="modalidade">{{ modalidade }}</option>
+                }
+              </select>
+            </label>
+            <label>
+              Dono
+              <select name="usuarioId" [(ngModel)]="formLivro.usuarioId">
+                @for (usuario of usuarios(); track usuario.id) {
+                  <option [ngValue]="usuario.id">{{ usuario.nomeUsuario }} (&#64;{{ usuario.username }})</option>
+                }
+              </select>
+            </label>
+          }
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-modal-secondary" (click)="livroEmCriacao.set(false)">Cancelar</button>
+          <button type="submit" class="btn-modal-primary" [disabled]="salvando()">Cadastrar</button>
+        </div>
+      </form>
     </div>
   }
 </div>

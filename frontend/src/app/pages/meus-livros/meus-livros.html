@@ -19,6 +19,9 @@
         <a [routerLink]="['/meus-livros']" class="active">Meus Livros</a>
         <a routerLink="/interesses">Interesses</a>
         <a  [routerLink]="['/chat']">Chats</a>
+        @if (usuarioService.isAdministrador()) {
+          <a [routerLink]="['/admin']">Admin</a>
+        }
       </div>
 
       <div class="nav-actions">

@@ -1421,3 +1421,35 @@
     justify-content: center;
   }
 }
+
+.btn-create {
+  margin-top: 0;
+}
+
+.modal-tabs {
+  margin: 0;
+  padding: 0 22px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 6px;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  background: rgba(11, 17, 30, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font: inherit;
+}

@@ -4,7 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AdminService } from '../../core/services/admin.service';
 import { UsuarioService } from '../../core/services/usuario.service';
-import { EstatisticasAdmin, LivroAdmin, UsuarioAdmin } from '../../core/models/admin.model';
+import {
+  EstatisticasAdmin,
+  LivroAdmin,
+  LivroAdminForm,
+  UsuarioAdmin,
+  UsuarioAdminForm
+} from '../../core/models/admin.model';
 
 @Component({
   selector: 'app-admin',
@@ -18,9 +24,25 @@ export class AdminComponent implements OnInit {
   estatisticas = signal<EstatisticasAdmin>({
     totalLivros: 0,
     totalUsuario: 0,
+    novosUsuarios: 0,
+    logins24h: 0,
+    trocasConcluidas: 0,
     totalInteresses: 0,
     interessesPendentes: 0
   });
+
+  readonly generos = ['Romance', 'Fantasia', 'Ficcao', 'Cientifica', 'Suspense', 'Policial', 'Terror', 'Historica'];
+  readonly modalidades = ['TROCA', 'DOACAO'];
+
+  pessoaEmEdicao = signal<UsuarioAdmin | 'nova' | null>(null);
+  abaPessoa = signal<'perfil' | 'acesso'>('perfil');
+  formPessoa: UsuarioAdminForm = this.pessoaVazia();
+
+  livroEmCriacao = signal<boolean>(false);
+  abaLivro = signal<'obra' | 'classificacao'>('obra');
+  formLivro: LivroAdminForm = this.livroVazio();
+
+  salvando = signal<boolean>(false);
 
   livros = signal<LivroAdmin[]>([]);
   usuarios = signal<UsuarioAdmin[]>([]);
@@ -196,13 +218,9 @@ export class AdminComponent implements OnInit {
     this.adminService.excluirLivro(livro.id).subscribe({
       next: () => {
         this.excluindo.set(false);
-        this.livros.update(lista => lista.filter(item => item.id !== livro.id));
-        this.estatisticas.update(prev => ({
-          ...prev,
-          totalLivros: Math.max(0, prev.totalLivros - 1)
-        }));
         this.livroParaExcluir.set(null);
-        this.mostrarMensagemSucesso(`Livro "${livro.titulo}" excluído com sucesso do catálogo.`);
+        this.carregarTodosDados();
+        this.mostrarMensagemSucesso(`Livro "${livro.titulo}" removido do catálogo.`);
       },
       error: (err) => {
         this.excluindo.set(false);
@@ -210,6 +228,92 @@ export class AdminComponent implements OnInit {
         this.mostrarMensagemErro(`Falha ao excluir o livro "${livro.titulo}". Verifique se há vínculos pendentes.`);
       }
     });
+  }
+
+  alterarLivro(livro: LivroAdmin, acao: 'suspender' | 'reativar' | 'restaurar'): void {
+    const mensagens = {
+      suspender: 'suspenso',
+      reativar: 'reativado',
+      restaurar: 'restaurado'
+    };
+
+    this.adminService.alterarLivro(livro.id, acao).subscribe({
+      next: () => {
+        this.carregarTodosDados();
+        this.mostrarMensagemSucesso(`Livro "${livro.titulo}" ${mensagens[acao]}.`);
+      },
+      error: (err) => this.mostrarMensagemErro(err.error || 'Não foi possível alterar o livro.')
+    });
+  }
+
+  abrirNovoLivro(): void {
+    this.formLivro = { ...this.livroVazio(), usuarioId: this.usuarioService.obterIdUsuarioLogado() || null };
+    this.abaLivro.set('obra');
+    this.livroEmCriacao.set(true);
+  }
+
+  salvarLivro(): void {
+    this.salvando.set(true);
+    this.adminService.criarLivro(this.formLivro).subscribe({
+      next: () => {
+        this.salvando.set(false);
+        this.livroEmCriacao.set(false);
+        this.carregarTodosDados();
+        this.mostrarMensagemSucesso(`Livro "${this.formLivro.titulo}" cadastrado.`);
+      },
+      error: (err) => {
+        this.salvando.set(false);
+        this.mostrarMensagemErro(err.error || 'Não foi possível cadastrar o livro.');
+      }
+    });
+  }
+
+  abrirPessoa(usuario?: UsuarioAdmin): void {
+    this.formPessoa = usuario
+      ? {
+          username: usuario.username,
+          senha: '',
+          nomeUsuario: usuario.nomeUsuario,
+          descricaoUsuario: usuario.descricaoUsuario ?? '',
+          tipoUsuario: usuario.tipoUsuario === 'ADMIN' ? 'ADMIN' : 'COMUM'
+        }
+      : this.pessoaVazia();
+    this.abaPessoa.set('perfil');
+    this.pessoaEmEdicao.set(usuario ?? 'nova');
+  }
+
+  salvarPessoa(): void {
+    const pessoa = this.pessoaEmEdicao();
+    const id = pessoa && pessoa !== 'nova' ? pessoa.id : undefined;
+
+    this.salvando.set(true);
+    this.adminService.salvarUsuario(this.formPessoa, id).subscribe({
+      next: (salvo) => {
+        this.salvando.set(false);
+        this.pessoaEmEdicao.set(null);
+        this.carregarTodosDados();
+        this.mostrarMensagemSucesso(`Usuário "${salvo.nomeUsuario}" ${id ? 'atualizado' : 'criado'}.`);
+      },
+      error: (err) => {
+        this.salvando.set(false);
+        this.mostrarMensagemErro(err.error || 'Não foi possível salvar o usuário.');
+      }
+    });
+  }
+
+  private pessoaVazia(): UsuarioAdminForm {
+    return { username: '', senha: '', nomeUsuario: '', descricaoUsuario: '', tipoUsuario: 'COMUM' };
+  }
+
+  private livroVazio(): LivroAdminForm {
+    return {
+      titulo: '',
+      autor: '',
+      descricaoLivro: '',
+      generoLivro: '',
+      tipoInteracao: 'TROCA',
+      usuarioId: null
+    };
   }
 
   abrirDetalhesLivro(livro: LivroAdmin): void {

@@ -232,8 +232,8 @@ BEGIN
     IF EXISTS (SELECT 1 FROM dbo.usuarios WHERE username = @username)
         THROW 50032, N'Esse nome de usuário já existe', 1;
 
-    INSERT INTO dbo.usuarios (username, senha, nome_usuario)
-    VALUES (@username, @senha, @nome_usuario);
+    INSERT INTO dbo.usuarios (username, senha, nome_usuario, tipo_usuario, data_cadastro)
+    VALUES (@username, @senha, @nome_usuario, 'COMUM', SYSDATETIME());
 
     SET @usuario_id = SCOPE_IDENTITY();
 END;
